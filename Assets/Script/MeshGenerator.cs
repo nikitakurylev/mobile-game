@@ -11,8 +11,11 @@ public class MeshGenerator : MonoBehaviour
 
     private void OnValidate()
     {
-        if (GetComponent<MeshFilter>() == null)
+        _meshFilter = GetComponent<MeshFilter>();
+        if (_meshFilter == null)
             throw new UnityException("No Mesh Filter");
+        if (_voxelMap != null)
+            GenerateMesh();
     }
 
     private void Start()
@@ -26,6 +29,7 @@ public class MeshGenerator : MonoBehaviour
         float at = Time.realtimeSinceStartup;
         List<int> Triangles = new List<int>();
         List<Vector3> Verticies = new List<Vector3>();
+        List<Vector3> Normals = new List<Vector3>();
         List<Vector2> uv = new List<Vector2>();
 
         int[,] Faces = new int[6, 9]{
@@ -47,7 +51,8 @@ public class MeshGenerator : MonoBehaviour
                         new Vector3(-1, -1, -1), new Vector3(-1, -1, 1),
                         new Vector3(1, -1, 1), new Vector3(1, -1, -1),
                     };
-
+                    Vector3 offset = new Vector3(0.5f - _voxelMap.Dimensions.x / 2f, 0.5f, 0.5f - _voxelMap.Dimensions.z / 2f);
+                    
                     float faceSize = 1f / (BlockTypeCount + 1);
                     if (_voxelMap.GetVoxel(x, y, z) != 0)
                         for (int o = 0; o < 6; o++)
@@ -57,7 +62,11 @@ public class MeshGenerator : MonoBehaviour
                     void AddQuad(int facenum, int v, byte blockType, float faceSize)
                     {
                         // Add Mesh
-                        for (int i = 0; i < 4; i++) Verticies.Add(new Vector3(x, y, z) + VertPos[Faces[facenum, i]] / 2f);
+                        for (int i = 0; i < 4; i++)
+                        {
+                            Verticies.Add(offset + new Vector3(x, y, z) + VertPos[Faces[facenum, i]] / 2f);
+                            Normals.Add(new Vector3(Faces[facenum, 4], Faces[facenum, 5], Faces[facenum, 6]));
+                        }
                         Triangles.AddRange(new List<int>() { v, v + 1, v + 2, v, v + 2, v + 3 });
 
                         // Add uvs
@@ -71,7 +80,8 @@ public class MeshGenerator : MonoBehaviour
         {
             vertices = Verticies.ToArray(),
             triangles = Triangles.ToArray(),
-            uv = uv.ToArray()
+            uv = uv.ToArray(),
+            normals = Normals.ToArray()
         };
 
     }
