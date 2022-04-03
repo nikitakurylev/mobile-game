@@ -2,36 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(MeshFilter))]
 public class MeshGenerator : MonoBehaviour
 {
+    [SerializeField] private Xraw _xraw;
+    private const byte BlockTypeCount = 255;
+    private Vector3Int _dimensions;
+    private MeshFilter _meshFilter;
 
-    public Vector3Int Dimentions;
-    public float NoiseScale;
-    public int blockTypeCount;
-    byte[,,] Voxels;
-
-    private void Awake()
+    private void OnValidate()
     {
-        Voxels = new byte[Dimentions.x, Dimentions.y, Dimentions.z];
-        Voxels[1, 1, 3] = 3;
-        Voxels[1, 1, 1] = 3;
-        Voxels[1, 1, 2] = 3;
-        Voxels[1, 2, 2] = 3;
-        Voxels[1, 3, 2] = 3;
-        Voxels[1, 4, 2] = 2;
+        if (GetComponent<MeshFilter>() == null)
+            throw new UnityException("No Mesh Filter");
+    }
+
+    private void Start()
+    {
+        _meshFilter = GetComponent<MeshFilter>();
         GenerateMesh();
     }
 
-    private void GenerateMesh()
+    public void GenerateMesh()
     {
         float at = Time.realtimeSinceStartup;
         List<int> Triangles = new List<int>();
         List<Vector3> Verticies = new List<Vector3>();
         List<Vector2> uv = new List<Vector2>();
 
-        for (int x = 1; x < Dimentions.x - 1; x++)
-            for (int y = 1; y < Dimentions.y - 1; y++)
-                for (int z = 1; z < Dimentions.z - 1; z++)
+        for (int x = 0; x < _dimensions.x; x++)
+            for (int y = 0; y < _dimensions.y; y++)
+                for (int z = 0; z < _dimensions.z; z++)
                 {
                     Vector3[] VertPos = new Vector3[8]{
                         new Vector3(-1, 1, -1), new Vector3(-1, 1, 1),
@@ -49,11 +49,11 @@ public class MeshGenerator : MonoBehaviour
                         {1, 0, 4, 5, -1, 0, 0,  1, 1}    //back
                     };
 
-                    float faceSize = 1f / blockTypeCount;
-                    if (Voxels[x, y, z] != 0)
+                    float faceSize = 1f / (BlockTypeCount + 1);
+                    if (_xraw.GetVoxel(x, y, z) != 0)
                         for (int o = 0; o < 6; o++)
-                            if (Voxels[x + Faces[o, 4], y + Faces[o, 5], z + Faces[o, 6]] == 0)
-                                AddQuad(o, Verticies.Count, Voxels[x, y, z], faceSize);
+                            if (_xraw.GetVoxel(x + Faces[o, 4], y + Faces[o, 5], z + Faces[o, 6]) == 0)
+                                AddQuad(o, Verticies.Count, _xraw.GetVoxel(x, y, z), faceSize);
 
                     void AddQuad(int facenum, int v, byte blockType, float faceSize)
                     {
@@ -68,7 +68,7 @@ public class MeshGenerator : MonoBehaviour
                     }
                 }
 
-        GetComponent<MeshFilter>().mesh = new Mesh()
+        _meshFilter.mesh = new Mesh()
         {
             vertices = Verticies.ToArray(),
             triangles = Triangles.ToArray(),
