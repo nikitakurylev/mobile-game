@@ -53,7 +53,7 @@ public class MeshGenerator : MonoBehaviour
                 new Vector3(-1, -1, -1), new Vector3(-1, -1, 1),
                 new Vector3(1, -1, 1), new Vector3(1, -1, -1),
             };
-            Vector3 offset = new Vector3(0.5f - _voxelMap.Dimensions.x / 2f, 0.5f, 0.5f - _voxelMap.Dimensions.z / 2f);
+            Vector3 offset = new Vector3(0.5f - _voxelMap.Dimensions.x / 2, 0.5f, 0.5f - _voxelMap.Dimensions.z / 2);
             const float uvPadding = 0.0001f;
 
             float faceSize = 1f / (BlockTypeCount + 1);
