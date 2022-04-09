@@ -26,6 +26,16 @@ public class HumanController : MonoBehaviour
         set => _inventoryCount = value;
     }
 
+    public HumanTask HumanTask
+    {
+        get => _humanTask;
+        set
+        { 
+            _humanTask = value;
+            _humanTask.SetController(this);
+        }
+    }
+
     private void OnValidate()
     {
         if (GetComponent<IHumanMovement>() == null)
@@ -49,16 +59,9 @@ public class HumanController : MonoBehaviour
             _humanTask.OnArrive();
         }
     }
-    
-    public void SetTask(HumanTask humanTask)
-    {
-        _humanTask = humanTask;
-        _humanTask.SetController(this);
-    }
 
     public void FinishTask()
     {
-        _humanTask = null;
         _humanPlanner.OnHumanFinish(this);
     }
     
