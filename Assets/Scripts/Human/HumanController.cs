@@ -10,7 +10,22 @@ public class HumanController : MonoBehaviour
     private IHumanMovement _movement;
     private Transform _movementTarget;
     private HumanPlanner _humanPlanner;
+    private ResourceEnum _inventoryResource = ResourceEnum.None;
+    private int _inventoryCapacity = 3;
+    private int _inventoryCount = 0;
     
+    public ResourceEnum InventoryResource
+    {
+        get => _inventoryResource;
+        set => _inventoryResource = value;
+    }
+
+    public int InventoryCount
+    {
+        get => _inventoryCount;
+        set => _inventoryCount = value;
+    }
+
     private void OnValidate()
     {
         if (GetComponent<IHumanMovement>() == null)
@@ -25,6 +40,16 @@ public class HumanController : MonoBehaviour
             throw new UnityException("No Human Planner in scene");
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (_movementTarget != null && other.transform == _movementTarget)
+        {
+            _movementTarget = null;
+            _movement.Stop();
+            _humanTask.OnArrive();
+        }
+    }
+    
     public void SetTask(HumanTask humanTask)
     {
         _humanTask = humanTask;
@@ -48,13 +73,8 @@ public class HumanController : MonoBehaviour
         _movementTarget = humanTarget.transform;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public bool HasFreeInventorySpace()
     {
-        if (_movementTarget != null && other.transform == _movementTarget)
-        {
-            _movementTarget = null;
-            _movement.Stop();
-            _humanTask.OnArrive();
-        }
+        return _inventoryCount < _inventoryCapacity;
     }
 }

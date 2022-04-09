@@ -14,7 +14,7 @@ public abstract class HumanTask
     
     protected abstract void StartTask();
 
-    protected void FinishTask()
+    protected virtual void FinishTask()
     {
         HumanController.FinishTask();
     }

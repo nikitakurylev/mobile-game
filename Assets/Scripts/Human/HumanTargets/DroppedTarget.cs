@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class DroppedTarget : HumanTarget
 {
+    [SerializeField] private ResourceEnum _resource;
+
+    public ResourceEnum Resource => _resource;
+
     protected bool free = true;
     
     public override void Occupy()

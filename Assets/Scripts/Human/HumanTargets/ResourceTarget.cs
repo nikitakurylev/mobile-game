@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ResourceTarget : HumanTarget
 {
-    
+    [SerializeField] private ResourceEnum _resource;
     public override void Occupy()
     {
         throw new System.NotImplementedException();

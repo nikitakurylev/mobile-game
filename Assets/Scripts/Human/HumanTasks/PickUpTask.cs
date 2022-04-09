@@ -7,17 +7,24 @@ public class PickUpTask : HumanTask
 {
     private DroppedTarget _droppedTarget;
 
-    protected override void StartTask()
+    private DroppedTarget FindClosestFreeDroppedTarget()
     {
         DroppedTarget[] droppedTargets = HumanController.FindTargets<DroppedTarget>();
         if (droppedTargets.Length == 0)
         {
-            FinishTask();
-            return;
+            return null;
         }
-        _droppedTarget = droppedTargets
+
+        return droppedTargets
             .OrderBy(target => Vector3.SqrMagnitude(target.transform.position - HumanController.transform.position))
-            .FirstOrDefault(target => target.IsFree());
+            .FirstOrDefault(target => target.IsFree() && (HumanController.InventoryResource == ResourceEnum.None ||
+                                                          target.Resource == HumanController.InventoryResource));
+    }
+
+    private void ChooseTarget()
+    {
+        _droppedTarget = FindClosestFreeDroppedTarget();
+
         if (_droppedTarget == null)
             FinishTask();
         else
@@ -27,9 +34,25 @@ public class PickUpTask : HumanTask
         }
     }
 
+    protected override void StartTask()
+    {
+        ChooseTarget();
+    }
+
     public override void OnArrive()
     {
+        HumanController.InventoryResource = _droppedTarget.Resource;
+        HumanController.InventoryCount++;
         _droppedTarget.PickUp();
-        FinishTask();
+        if (HumanController.HasFreeInventorySpace())
+            ChooseTarget();
+        else
+            FinishTask();
+    }
+
+    protected override void FinishTask()
+    {
+        HumanController.InventoryResource = ResourceEnum.None;
+        base.FinishTask();
     }
 }
