@@ -21,6 +21,6 @@ public class StorageTarget : HumanTarget
 
     public override bool IsFree()
     {
-        return _storage
+        return false;
     }
 }

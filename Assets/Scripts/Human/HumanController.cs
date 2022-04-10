@@ -6,21 +6,11 @@ using UnityEngine;
 [RequireComponent(typeof(IHumanMovement))]
 public class HumanController : MonoBehaviour
 {
-    private HumanTask _humanTask;
+    private Queue<HumanTask> _taskQueue;
     private IHumanMovement _movement;
     private Transform _movementTarget;
     private HumanPlanner _humanPlanner;
     [SerializeField] private Storage _storage;
-
-    public HumanTask HumanTask
-    {
-        get => _humanTask;
-        set
-        {
-            _humanTask = value;
-            _humanTask.SetController(this);
-        }
-    }
 
     public ResourceEnum InventoryResource
     {
@@ -63,11 +53,6 @@ public class HumanController : MonoBehaviour
     public void FinishTask()
     {
         _humanPlanner.OnHumanFinish(this);
-    }
-
-    public T[] FindTargets<T>() where T : HumanTarget
-    {
-        return FindObjectsOfType<T>();
     }
 
     public void MoveTo(HumanTarget humanTarget)
