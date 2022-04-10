@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,6 +6,11 @@ using UnityEngine;
 
 public class HumanPlanner : MonoBehaviour
 {
+    private bool _updated = false;
+    private List<StorageTarget> _freeStorageTargets;
+    private List<DroppedTarget> _freeDroppedTargets;
+    private List<ResourceTarget> _freeResourceTargets;
+
     private void OnValidate()
     {
         if (FindObjectsOfType<HumanPlanner>().FirstOrDefault(planner => planner != this) != null)
@@ -22,8 +28,39 @@ public class HumanPlanner : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        _updated = false;
+    }
+
     public void OnHumanFinish(HumanController humanController)
     {
-        humanController.EnqueueTask(new IdleTask());
+        if (!_updated)
+        {
+            _freeStorageTargets = FindObjectsOfType<StorageTarget>().Where(target => target.GetFreeSpace() > 0).ToList();
+            _freeDroppedTargets = FindObjectsOfType<DroppedTarget>().Where(target => target.IsFree()).ToList();
+            _freeResourceTargets = FindObjectsOfType<ResourceTarget>().Where(target => target.IsFree()).ToList();
+            _updated = true;
+        }
+
+        if (_freeStorageTargets.Count > 0)
+        {
+            StorageTarget storageTarget = _freeStorageTargets[0];
+            List<DroppedTarget> droppedTargets = _freeDroppedTargets.Where(target => target.Resource == storageTarget.Resource).ToList();
+            if (droppedTargets.Count > 0)
+            {
+                int targetCount = Math.Min(Math.Min(humanController.InventoryCapacity, droppedTargets.Count), storageTarget.GetFreeSpace());
+                for (int i = 0; i < targetCount; i++)
+                {
+                    humanController.EnqueueTask(new GatherTask(droppedTargets[i]));
+                    _freeDroppedTargets.Remove(droppedTargets[i]);
+                }
+                humanController.EnqueueTask(new StoreTask(storageTarget, targetCount));
+                if (storageTarget.GetFreeSpace() <= 0)
+                    _freeStorageTargets.Remove(storageTarget);
+            }
+        }
+        else
+            humanController.EnqueueTask(new IdleTask());
     }
 }

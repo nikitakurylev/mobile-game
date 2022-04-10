@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Storage : MonoBehaviour
 {
-    private ResourceEnum _resourceType = ResourceEnum.None;
-    private int _storageCapacity = 3;
+    [SerializeField] private ResourceEnum _resourceType = ResourceEnum.None;
+    [SerializeField] private int _storageCapacity = 3;
     private int _itemCount = 0;
     
     public ResourceEnum ResourceType
@@ -19,7 +19,13 @@ public class Storage : MonoBehaviour
         get => _itemCount;
         set => _itemCount = value;
     }
-    
+
+    public int StorageCapacity
+    {
+        get => _storageCapacity;
+        set => _storageCapacity = value;
+    }
+
     public bool HasFreeSpace()
     {
         return _itemCount < _storageCapacity;

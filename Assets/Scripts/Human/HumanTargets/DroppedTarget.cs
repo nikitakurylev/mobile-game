@@ -10,12 +10,12 @@ public class DroppedTarget : HumanTarget
 
     protected bool free = true;
     
-    public override void Occupy(HumanController humanController)
+    public void Occupy()
     {
         free = false;
     }
 
-    public override bool IsFree()
+    public bool IsFree()
     {
         return free;
     }

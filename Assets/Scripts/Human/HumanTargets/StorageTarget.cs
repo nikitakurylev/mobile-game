@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,6 +8,9 @@ using UnityEngine;
 public class StorageTarget : HumanTarget
 {
     private Storage _storage;
+    private int _occupied = 0;
+    
+    public ResourceEnum Resource => _storage.ResourceType;
     
     private void OnValidate()
     {
@@ -14,13 +18,24 @@ public class StorageTarget : HumanTarget
             throw new UnityException("No Storage");
     }
 
-    
-    public override void Occupy(HumanController humanController)
+    private void Awake()
     {
+        _storage = GetComponent<Storage>();
     }
 
-    public override bool IsFree()
+    public void Occupy(int count)
     {
-        return false;
+        _occupied += count;
+    }
+
+    public void Store(int count)
+    {
+        _occupied -= count;
+        _storage.ItemCount += count;
+    }
+
+    public int GetFreeSpace()
+    {
+        return _storage.StorageCapacity - _storage.ItemCount - _occupied;
     }
 }

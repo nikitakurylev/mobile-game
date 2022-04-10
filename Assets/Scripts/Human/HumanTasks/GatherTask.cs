@@ -11,7 +11,7 @@ public class GatherTask : HumanTask
     public GatherTask(DroppedTarget droppedTarget)
     {
         _droppedTarget = droppedTarget;
-        _droppedTarget.Occupy(HumanController);
+        _droppedTarget.Occupy();
     }
 
     protected override void StartTask()

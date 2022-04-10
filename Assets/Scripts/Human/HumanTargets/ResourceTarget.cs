@@ -5,12 +5,15 @@ using UnityEngine;
 public class ResourceTarget : HumanTarget
 {
     [SerializeField] private ResourceEnum _resource;
-    public override void Occupy(HumanController humanController)
+    
+    public ResourceEnum Resource => _resource;
+
+    public void Occupy(HumanController humanController)
     {
         throw new System.NotImplementedException();
     }
 
-    public override bool IsFree()
+    public bool IsFree()
     {
         throw new System.NotImplementedException();
     }

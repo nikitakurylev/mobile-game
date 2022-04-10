@@ -24,6 +24,12 @@ public class HumanController : MonoBehaviour
         get => _storage.ItemCount;
         set => _storage.ItemCount = value;
     }
+    
+    public int InventoryCapacity
+    {
+        get => _storage.StorageCapacity;
+        set => _storage.StorageCapacity = value;
+    }
 
     private void OnValidate()
     {
@@ -63,9 +69,8 @@ public class HumanController : MonoBehaviour
     {
         _taskQueue.Dequeue();
         if(_taskQueue.Count == 0)
-            _humanPlanner.OnHumanFinish(this);
-        else
-            _taskQueue.Peek().ExecuteTask(this);
+            _humanPlanner.OnHumanFinish(this); 
+        _taskQueue.Peek().ExecuteTask(this);
     }
 
     public void MoveTo(HumanTarget humanTarget)
