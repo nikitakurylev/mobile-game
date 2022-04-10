@@ -10,30 +10,28 @@ public class HumanController : MonoBehaviour
     private IHumanMovement _movement;
     private Transform _movementTarget;
     private HumanPlanner _humanPlanner;
-    private ResourceEnum _inventoryResource = ResourceEnum.None;
-    private int _inventoryCapacity = 3;
-    private int _inventoryCount = 0;
-    
-    public ResourceEnum InventoryResource
-    {
-        get => _inventoryResource;
-        set => _inventoryResource = value;
-    }
-
-    public int InventoryCount
-    {
-        get => _inventoryCount;
-        set => _inventoryCount = value;
-    }
+    [SerializeField] private Storage _storage;
 
     public HumanTask HumanTask
     {
         get => _humanTask;
         set
-        { 
+        {
             _humanTask = value;
             _humanTask.SetController(this);
         }
+    }
+
+    public ResourceEnum InventoryResource
+    {
+        get => _storage.ResourceType;
+        set => _storage.ResourceType = value;
+    }
+
+    public int InventoryCount
+    {
+        get => _storage.ItemCount;
+        set => _storage.ItemCount = value;
     }
 
     private void OnValidate()
@@ -46,8 +44,10 @@ public class HumanController : MonoBehaviour
     {
         _movement = GetComponent<IHumanMovement>();
         _humanPlanner = FindObjectOfType<HumanPlanner>();
-        if(_humanPlanner == null)
+        if (_humanPlanner == null)
             throw new UnityException("No Human Planner in scene");
+        if (_storage == null)
+            throw new UnityException("No Storage assigned");
     }
 
     private void OnTriggerEnter(Collider other)
@@ -64,7 +64,7 @@ public class HumanController : MonoBehaviour
     {
         _humanPlanner.OnHumanFinish(this);
     }
-    
+
     public T[] FindTargets<T>() where T : HumanTarget
     {
         return FindObjectsOfType<T>();
@@ -78,6 +78,6 @@ public class HumanController : MonoBehaviour
 
     public bool HasFreeInventorySpace()
     {
-        return _inventoryCount < _inventoryCapacity;
+        return _storage.HasFreeSpace();
     }
 }

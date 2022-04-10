@@ -4,6 +4,6 @@ using UnityEngine;
 
 public abstract class HumanTarget : MonoBehaviour
 {
-    public abstract void Occupy();
+    public abstract void Occupy(HumanController humanController);
     public abstract bool IsFree();
 }

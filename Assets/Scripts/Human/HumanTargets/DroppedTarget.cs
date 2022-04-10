@@ -10,7 +10,7 @@ public class DroppedTarget : HumanTarget
 
     protected bool free = true;
     
-    public override void Occupy()
+    public override void Occupy(HumanController humanController)
     {
         free = false;
     }

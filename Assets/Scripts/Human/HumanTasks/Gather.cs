@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PickUpTask : HumanTask
+public class Gather : HumanTask
 {
     private DroppedTarget _droppedTarget;
 
@@ -29,7 +29,7 @@ public class PickUpTask : HumanTask
             FinishTask();
         else
         {
-            _droppedTarget.Occupy();
+            _droppedTarget.Occupy(HumanController);
             HumanController.MoveTo(_droppedTarget);
         }
     }

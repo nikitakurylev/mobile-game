@@ -5,7 +5,7 @@ using UnityEngine;
 public class ResourceTarget : HumanTarget
 {
     [SerializeField] private ResourceEnum _resource;
-    public override void Occupy()
+    public override void Occupy(HumanController humanController)
     {
         throw new System.NotImplementedException();
     }
