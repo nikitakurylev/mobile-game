@@ -6,42 +6,33 @@ using UnityEngine;
 public class GatherTask : HumanTask
 {
     private DroppedTarget _droppedTarget;
+    private bool _isMoving = false;
 
     public GatherTask(DroppedTarget droppedTarget)
     {
         _droppedTarget = droppedTarget;
-    }
-
-    private void ChooseDroppedTarget()
-    {
-        if (_droppedTarget == null || (HumanController.InventoryResource != ResourceEnum.None && _droppedTarget.Resource != HumanController.InventoryResource))
-            FinishTask();
-        else
-        {
-            _droppedTarget.Occupy(HumanController);
-            HumanController.MoveTo(_droppedTarget);
-        }
+        _droppedTarget.Occupy(HumanController);
     }
 
     protected override void StartTask()
     {
-        ChooseDroppedTarget();
+        HumanController.MoveTo(_droppedTarget);
+        _isMoving = true;
     }
 
-    public override void OnArrive()
+    public override void OnActionFinish()
     {
-        HumanController.InventoryResource = _droppedTarget.Resource;
-        HumanController.InventoryCount++;
-        _droppedTarget.PickUp();
-        if (HumanController.HasFreeInventorySpace())
-            ChooseDroppedTarget();
+        if (_isMoving)
+        {
+            _isMoving = false;
+            HumanController.ExecuteAction("gather");
+        }
         else
+        {
+            HumanController.InventoryResource = _droppedTarget.Resource;
+            HumanController.InventoryCount++;
+            _droppedTarget.PickUp();
             FinishTask();
-    }
-
-    protected override void FinishTask()
-    {
-        HumanController.InventoryResource = ResourceEnum.None;
-        base.FinishTask();
+        }
     }
 }

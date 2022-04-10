@@ -18,15 +18,12 @@ public class HumanPlanner : MonoBehaviour
     {
         foreach (var human in FindObjectsOfType<HumanController>())
         {
-            human.HumanTask = new GatherTask();
+            human.EnqueueTask(new IdleTask());
         }
     }
 
     public void OnHumanFinish(HumanController humanController)
     {
-        if(humanController.HumanTask.GetType() == typeof(GatherTask))
-            humanController.HumanTask = new StoreTask();
-        else if(FindObjectsOfType<DroppedTarget>().FirstOrDefault(target => target.IsFree()) != null)
-            humanController.HumanTask = new GatherTask();
+        humanController.EnqueueTask(new IdleTask());
     }
 }

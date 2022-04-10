@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 [RequireComponent(typeof(IHumanMovement))]
@@ -38,27 +39,45 @@ public class HumanController : MonoBehaviour
             throw new UnityException("No Human Planner in scene");
         if (_storage == null)
             throw new UnityException("No Storage assigned");
+        _taskQueue = new Queue<HumanTask>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (_movementTarget != null && other.transform == _movementTarget)
         {
             _movementTarget = null;
             _movement.Stop();
-            _humanTask.OnArrive();
+            _taskQueue.Peek().OnActionFinish();
         }
+    }
+
+    public void EnqueueTask(HumanTask humanTask)
+    {
+        _taskQueue.Enqueue(humanTask);
+        if(_taskQueue.Count == 1)
+            _taskQueue.Peek().ExecuteTask(this);
     }
 
     public void FinishTask()
     {
-        _humanPlanner.OnHumanFinish(this);
+        _taskQueue.Dequeue();
+        if(_taskQueue.Count == 0)
+            _humanPlanner.OnHumanFinish(this);
+        else
+            _taskQueue.Peek().ExecuteTask(this);
     }
 
     public void MoveTo(HumanTarget humanTarget)
     {
         _movement.MoveTo(humanTarget.transform.position);
         _movementTarget = humanTarget.transform;
+    }
+
+    public void ExecuteAction(string actionName)
+    {
+        //dummy
+        _taskQueue.Peek().OnActionFinish();
     }
 
     public bool HasFreeInventorySpace()

@@ -6,7 +6,7 @@ public abstract class HumanTask
 {
     protected HumanController HumanController;
 
-    public void SetController(HumanController humanController)
+    public void ExecuteTask(HumanController humanController)
     {
         this.HumanController = humanController;
         StartTask();
@@ -19,5 +19,5 @@ public abstract class HumanTask
         HumanController.FinishTask();
     }
     
-    public abstract void OnArrive();
+    public abstract void OnActionFinish();
 }
