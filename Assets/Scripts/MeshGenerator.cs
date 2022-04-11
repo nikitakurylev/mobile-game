@@ -9,22 +9,23 @@ public class MeshGenerator : MonoBehaviour
     private const byte BlockTypeCount = 255;
     private MeshFilter _meshFilter;
 
+    public Vector3Int Dimensions => _voxelMap.Dimensions;
+
     private void OnValidate()
     {
         _meshFilter = GetComponent<MeshFilter>();
         if (_meshFilter == null)
             throw new UnityException("No Mesh Filter");
         if (_voxelMap != null)
-            GenerateMesh();
+            GenerateMesh(_voxelMap.Dimensions);
     }
 
-    private void Start()
+    private void Awake()
     {
         _meshFilter = GetComponent<MeshFilter>();
-        GenerateMesh();
     }
 
-    public void GenerateMesh()
+    public void GenerateMesh(Vector3Int frame)
     {
         float at = Time.realtimeSinceStartup;
         List<int> Triangles = new List<int>();
@@ -42,9 +43,9 @@ public class MeshGenerator : MonoBehaviour
             {1, 0, 4, 5, -1, 0, 0, 1, 1} //back
         };
 
-        for (int x = 0; x < _voxelMap.Dimensions.x; x++)
-        for (int y = 0; y < _voxelMap.Dimensions.y; y++)
-        for (int z = 0; z < _voxelMap.Dimensions.z; z++)
+        for (int x = 0; x < frame.x; x++)
+        for (int y = 0; y < frame.y; y++)
+        for (int z = 0; z < frame.z; z++)
         {
             Vector3[] VertPos = new Vector3[8]
             {
@@ -57,9 +58,9 @@ public class MeshGenerator : MonoBehaviour
             const float uvPadding = 0.0001f;
 
             float faceSize = 1f / (BlockTypeCount + 1);
-            if (_voxelMap.GetVoxel(x, y, z) != 0)
+            if (_voxelMap.GetVoxelCropped(x, y, z, frame) != 0)
                 for (int o = 0; o < 6; o++)
-                    if (_voxelMap.GetVoxel(x + Faces[o, 4], y + Faces[o, 5], z + Faces[o, 6]) == 0)
+                    if (_voxelMap.GetVoxelCropped(x + Faces[o, 4], y + Faces[o, 5], z + Faces[o, 6], frame) == 0)
                         AddQuad(o, Verticies.Count, _voxelMap.GetVoxel(x, y, z), faceSize);
 
             void AddQuad(int facenum, int v, byte blockType, float faceSize)

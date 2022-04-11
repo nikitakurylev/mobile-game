@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ResourceTarget : HumanTarget
 {
@@ -16,6 +18,10 @@ public class ResourceTarget : HumanTarget
             throw new UnityException("No Storage Assigned");
         if (_dropPrefab == null)
             throw new UnityException("No Drop Prefab Assigned");
+    }
+
+    private void Start()
+    {
         _storage.ItemCount = _storage.StorageCapacity;
     }
 

@@ -20,7 +20,10 @@ public class SimpleMovement : MonoBehaviour, IHumanMovement
     {
         if (_isMoving)
         {
-            transform.Translate((_target.position - transform.position).normalized * _speed);
+            var position = transform.position;
+            Vector3 newPosition = position + (_target.position - position).normalized * _speed;
+            transform.LookAt(newPosition);
+            transform.position = newPosition;
             if ((transform.position - _target.position).sqrMagnitude <= _range * _range)
             {
                 foreach (IMovementListener listener in _listeners)

@@ -11,12 +11,14 @@ public class ChildrenIndicator : StorageIndicator
 
     public override void UpdateIndicator(Storage storage)
     {
+        if (_currentType != storage.ResourceType)
+            foreach (MeshRenderer meshRenderer in transform.GetComponentsInChildren<MeshRenderer>(true))
+                meshRenderer.material = _materials[(int) storage.ResourceType];      
+        
         for (int i = Math.Min(_count, storage.ItemCount); i < Math.Max(_count, storage.ItemCount); i++)
         {
             GameObject child = transform.GetChild(i).gameObject;
-            child.SetActive(!child.activeSelf);
-            if (_currentType != storage.ResourceType)
-                child.GetComponent<MeshRenderer>().material = _materials[(int) storage.ResourceType];
+            transform.GetChild(i).gameObject.SetActive(!child.activeSelf);
         }
 
         _currentType = storage.ResourceType;

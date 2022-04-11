@@ -49,7 +49,8 @@ public class HumanPlanner : MonoBehaviour
         {
             StorageTarget storageTarget = _freeStorageTargets[0];
             List<DroppedTarget> droppedTargets =
-                _freeDroppedTargets.Where(target => target.Resource == storageTarget.Resource).ToList();
+                _freeDroppedTargets.Where(target => target.Resource == storageTarget.Resource).OrderBy(target =>
+                    (target.transform.position - humanController.transform.position).sqrMagnitude).ToList();
             int targetCount = Math.Min(humanController.InventoryCapacity, storageTarget.GetFreeSpace());
             List<ResourceTarget> resourceTargets = _freeResourceTargets
                 .Where(target => target.Resource == storageTarget.Resource)
@@ -71,7 +72,7 @@ public class HumanPlanner : MonoBehaviour
             {
                 targetCount = Math.Min(targetCount, resourceTargets[0].GetAvailableResources());
                 humanController.EnqueueTask(new HarvestTask(resourceTargets[0], targetCount));
-                if(resourceTargets[0].GetAvailableResources() <= 0)
+                if (resourceTargets[0].GetAvailableResources() <= 0)
                     _freeResourceTargets.Remove(resourceTargets[0]);
             }
             else

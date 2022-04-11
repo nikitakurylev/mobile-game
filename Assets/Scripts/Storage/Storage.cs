@@ -39,6 +39,11 @@ public class Storage : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        _storageIndicator?.UpdateIndicator(this);
+    }
+
     public bool HasFreeSpace()
     {
         return _itemCount < _storageCapacity;

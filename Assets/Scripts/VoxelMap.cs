@@ -24,4 +24,11 @@ public class VoxelMap : ScriptableObject
             return 0;
         return _voxels[x + z * Dimensions.x + y * Dimensions.x * Dimensions.z];
     }
+    
+    public byte GetVoxelCropped(int x, int y, int z, Vector3Int frame)
+    {
+        if (x >= frame.x || y >= frame.y || z >= frame.z)
+            return 0;
+        return GetVoxel(x, y, z);
+    }
 }
