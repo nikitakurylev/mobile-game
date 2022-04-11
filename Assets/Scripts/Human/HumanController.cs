@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-[RequireComponent(typeof(IHumanMovement))]
+[RequireComponent(typeof(IHumanMovement), typeof(Storage))]
 public class HumanController : MonoBehaviour, IMovementListener
 {
     private Queue<HumanTask> _taskQueue;
     private IHumanMovement _movement;
     private HumanPlanner _humanPlanner;
-    [SerializeField] private Storage _storage;
+    private Storage _storage;
 
     public ResourceEnum InventoryResource
     {
@@ -34,11 +34,14 @@ public class HumanController : MonoBehaviour, IMovementListener
     {
         if (GetComponent<IHumanMovement>() == null)
             throw new UnityException("No Human Movement");
+        if (GetComponent<Storage>() == null)
+            throw new UnityException("No Storage");
     }
 
     private void Awake()
     {
         _movement = GetComponent<IHumanMovement>();
+        _storage = GetComponent<Storage>();
         _humanPlanner = FindObjectOfType<HumanPlanner>();
         if (_humanPlanner == null)
             throw new UnityException("No Human Planner in scene");

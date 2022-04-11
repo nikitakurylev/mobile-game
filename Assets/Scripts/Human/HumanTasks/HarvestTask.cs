@@ -7,6 +7,7 @@ public class HarvestTask : HumanTask
 {
     private ResourceTarget _resourceTarget;
     private int _resourceToHarvest;
+    private bool _isMoving = false;
     
     public HarvestTask(ResourceTarget resourceTarget, int resourceCount)
     {
@@ -17,6 +18,7 @@ public class HarvestTask : HumanTask
 
     protected override void StartTask()
     {
+        _isMoving = true;
         HumanController.MoveTo(_resourceTarget);
     }
 
@@ -24,8 +26,13 @@ public class HarvestTask : HumanTask
     {
         if (_resourceToHarvest > 0)
         {
-            _resourceToHarvest--;
-            _resourceTarget.Harvest();
+            if (_isMoving)
+                _isMoving = false;
+            else
+            {
+                _resourceToHarvest--;
+                _resourceTarget.Harvest(); 
+            }
             HumanController.ExecuteAction("harvest");
         }
         else
