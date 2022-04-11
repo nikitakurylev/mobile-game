@@ -25,12 +25,16 @@ public class StorageTarget : HumanTarget
 
     public void Occupy(int count)
     {
+        if (count > GetFreeSpace())
+            throw new UnityException("Trying to occupy more than available");
         _occupied += count;
     }
 
     public void Store(int count)
     {
         _occupied -= count;
+        if (_occupied < 0)
+            throw new UnityException("Stored more than occupied");
         _storage.ItemCount += count;
     }
 

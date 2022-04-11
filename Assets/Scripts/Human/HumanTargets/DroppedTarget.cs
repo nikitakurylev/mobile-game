@@ -12,6 +12,8 @@ public class DroppedTarget : HumanTarget
     
     public void Occupy()
     {
+        if (!IsFree())
+            throw new UnityException("Dropped already occupied");
         free = false;
     }
 
@@ -22,6 +24,8 @@ public class DroppedTarget : HumanTarget
 
     public void PickUp()
     {
+        if (IsFree())
+            throw new UnityException("Dropped picked without occupying first");
         Destroy(gameObject);
     }
 }

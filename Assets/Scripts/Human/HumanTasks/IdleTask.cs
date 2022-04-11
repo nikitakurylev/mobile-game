@@ -7,16 +7,11 @@ public class IdleTask : HumanTask
 {
     protected override void StartTask()
     {
-        HumanController.StartCoroutine(WaitAndFinish());
+        HumanController.ExecuteAction("idle");
     }
 
-    IEnumerator WaitAndFinish()
-    {
-        yield return null;
-        FinishTask();
-    }
-    
     public override void OnActionFinish()
     {
+        FinishTask();
     }
 }

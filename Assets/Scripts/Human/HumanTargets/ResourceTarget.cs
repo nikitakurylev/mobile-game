@@ -4,17 +4,41 @@ using UnityEngine;
 
 public class ResourceTarget : HumanTarget
 {
-    [SerializeField] private ResourceEnum _resource;
-    
-    public ResourceEnum Resource => _resource;
+    [SerializeField] private Storage _storage;
+    [SerializeField] private GameObject _dropPrefab;
+    private int _occupied = 0;
 
-    public void Occupy(HumanController humanController)
+    public ResourceEnum Resource => _storage.ResourceType;
+
+    private void Awake()
     {
-        throw new System.NotImplementedException();
+        if (_storage == null)
+            throw new UnityException("No Storage Assigned");
+        if (_dropPrefab == null)
+            throw new UnityException("No Drop Prefab Assigned");
+        _storage.ItemCount = _storage.StorageCapacity;
     }
 
-    public bool IsFree()
+    public void Harvest()
     {
-        throw new System.NotImplementedException();
+        _storage.ItemCount--;
+        _occupied--;
+        if (_occupied < 0)
+            throw new UnityException("Harvested more than occupied");
+        Instantiate(_dropPrefab,
+            transform.position + new Vector3(Random.Range(-1f, 1f), 0.5f, Random.Range(-1f, 1f)).normalized,
+            Quaternion.AngleAxis(Random.Range(0f, 360f), Vector3.up));
+    }
+
+    public void Occupy(int count)
+    {
+        if (count > GetAvailableResources())
+            throw new UnityException("Trying to occupy more than available");
+        _occupied += count;
+    }
+
+    public int GetAvailableResources()
+    {
+        return _storage.ItemCount - _occupied;
     }
 }

@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IHumanMovement
 {
-    void MoveTo(Vector3 position);
-    void Stop();
+    void AddListener(IMovementListener listener);
+    void MoveTo(Transform targetTransform);
 }

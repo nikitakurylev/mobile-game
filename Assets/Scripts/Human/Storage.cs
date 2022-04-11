@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,13 +18,23 @@ public class Storage : MonoBehaviour
     public int ItemCount
     {
         get => _itemCount;
-        set => _itemCount = value;
+        set
+        {
+            if (value > StorageCapacity)
+                throw new UnityException("Trying to store more than capacity");
+            _itemCount = value;
+        }
     }
 
     public int StorageCapacity
     {
         get => _storageCapacity;
-        set => _storageCapacity = value;
+        set
+        {
+            if (value < _itemCount)
+                throw new UnityException("Trying to make capacity less than stored");
+            _storageCapacity = value;
+        }
     }
 
     public bool HasFreeSpace()

@@ -6,24 +6,26 @@ using UnityEngine;
 public class HarvestTask : HumanTask
 {
     private ResourceTarget _resourceTarget;
-    private bool _isMoving = false;
+    private int _resourceToHarvest;
     
-    public HarvestTask(ResourceTarget resourceTarget)
+    public HarvestTask(ResourceTarget resourceTarget, int resourceCount)
     {
         _resourceTarget = resourceTarget;
+        _resourceTarget.Occupy(resourceCount);
+        _resourceToHarvest = resourceCount;
     }
 
     protected override void StartTask()
     {
         HumanController.MoveTo(_resourceTarget);
-        _isMoving = true;
     }
 
     public override void OnActionFinish()
     {
-        if (_isMoving)
+        if (_resourceToHarvest > 0)
         {
-            _isMoving = false;
+            _resourceToHarvest--;
+            _resourceTarget.Harvest();
             HumanController.ExecuteAction("harvest");
         }
         else

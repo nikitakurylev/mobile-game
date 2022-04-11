@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 [RequireComponent(typeof(IHumanMovement))]
-public class HumanController : MonoBehaviour
+public class HumanController : MonoBehaviour, IMovementListener
 {
     private Queue<HumanTask> _taskQueue;
     private IHumanMovement _movement;
-    private Transform _movementTarget;
     private HumanPlanner _humanPlanner;
     [SerializeField] private Storage _storage;
 
@@ -48,14 +47,13 @@ public class HumanController : MonoBehaviour
         _taskQueue = new Queue<HumanTask>();
     }
 
+    private void Start()
+    {
+        _movement.AddListener(this);
+    }
+
     private void OnTriggerStay(Collider other)
     {
-        if (_movementTarget != null && other.transform == _movementTarget)
-        {
-            _movementTarget = null;
-            _movement.Stop();
-            _taskQueue.Peek().OnActionFinish();
-        }
     }
 
     public void EnqueueTask(HumanTask humanTask)
@@ -75,18 +73,30 @@ public class HumanController : MonoBehaviour
 
     public void MoveTo(HumanTarget humanTarget)
     {
-        _movement.MoveTo(humanTarget.transform.position);
-        _movementTarget = humanTarget.transform;
+        _movement.MoveTo(humanTarget.transform);
     }
 
     public void ExecuteAction(string actionName)
     {
         //dummy
-        _taskQueue.Peek().OnActionFinish();
+        StopAllCoroutines();
+        StartCoroutine(WaitAndFinish());
     }
 
     public bool HasFreeInventorySpace()
     {
         return _storage.HasFreeSpace();
+    }
+    
+    
+    IEnumerator WaitAndFinish()//dummy
+    {
+        yield return new WaitForSeconds(1);
+        _taskQueue.Peek().OnActionFinish();
+    }
+
+    public void OnArrive()
+    {
+        _taskQueue.Peek().OnActionFinish();
     }
 }
