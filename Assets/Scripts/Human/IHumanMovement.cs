@@ -6,4 +6,5 @@ public interface IHumanMovement
 {
     void AddListener(IMovementListener listener);
     void MoveTo(Transform targetTransform);
+    float GetSpeed();
 }

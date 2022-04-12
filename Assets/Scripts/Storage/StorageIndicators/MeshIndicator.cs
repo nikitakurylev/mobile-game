@@ -7,6 +7,7 @@ using UnityEngine;
 public class MeshIndicator : StorageIndicator
 {
     [SerializeField] private int _totalStages = 3;
+    [SerializeField] private float _roundingOffset = 0.4f;
     private int _lastStage = -1;
     private MeshGenerator _meshGenerator;
 
@@ -23,7 +24,7 @@ public class MeshIndicator : StorageIndicator
 
     public override void UpdateIndicator(Storage storage)
     {
-        int currentStage = Mathf.RoundToInt(_totalStages * 1f * storage.ItemCount / storage.StorageCapacity);
+        int currentStage = Mathf.RoundToInt(_totalStages * 1f * storage.ItemCount / storage.StorageCapacity + _roundingOffset);
         if (currentStage != _lastStage)
         {
             _meshGenerator.GenerateMesh(new Vector3Int(_meshGenerator.Dimensions.x,

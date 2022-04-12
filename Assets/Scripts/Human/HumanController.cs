@@ -7,6 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(IHumanMovement), typeof(Storage))]
 public class HumanController : MonoBehaviour, IMovementListener
 {
+    [SerializeField] private Animator _animator;
     private Queue<HumanTask> _taskQueue;
     private IHumanMovement _movement;
     private HumanPlanner _humanPlanner;
@@ -45,8 +46,8 @@ public class HumanController : MonoBehaviour, IMovementListener
         _humanPlanner = FindObjectOfType<HumanPlanner>();
         if (_humanPlanner == null)
             throw new UnityException("No Human Planner in scene");
-        if (_storage == null)
-            throw new UnityException("No Storage assigned");
+        if (_animator == null)
+            throw new UnityException("No Animator assigned");
         _taskQueue = new Queue<HumanTask>();
     }
 
@@ -101,5 +102,10 @@ public class HumanController : MonoBehaviour, IMovementListener
     public void OnArrive()
     {
         _taskQueue.Peek().OnActionFinish();
+    }
+
+    public void OnActionFinished()
+    {
+        throw new NotImplementedException();
     }
 }

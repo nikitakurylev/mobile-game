@@ -22,6 +22,7 @@ public class SimpleMovement : MonoBehaviour, IHumanMovement
         {
             var position = transform.position;
             Vector3 newPosition = position + (_target.position - position).normalized * _speed;
+            newPosition = new Vector3(newPosition.x, 0, newPosition.z);
             transform.LookAt(newPosition);
             transform.position = newPosition;
             if ((transform.position - _target.position).sqrMagnitude <= _range * _range)
@@ -42,5 +43,10 @@ public class SimpleMovement : MonoBehaviour, IHumanMovement
     {
         _target = targetTransform;
         _isMoving = true;
+    }
+
+    public float GetSpeed()
+    {
+        return _speed;
     }
 }
