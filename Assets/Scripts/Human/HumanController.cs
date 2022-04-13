@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 [RequireComponent(typeof(IHumanMovement), typeof(Storage))]
-public class HumanController : MonoBehaviour, IMovementListener
+public class HumanController : MonoBehaviour, IActionListener
 {
     [SerializeField] private Animator _animator;
     private Queue<HumanTask> _taskQueue;
@@ -82,30 +82,16 @@ public class HumanController : MonoBehaviour, IMovementListener
 
     public void ExecuteAction(string actionName)
     {
-        //dummy
-        StopAllCoroutines();
-        StartCoroutine(WaitAndFinish());
+        _animator.SetTrigger(actionName);
     }
 
     public bool HasFreeInventorySpace()
     {
         return _storage.HasFreeSpace();
     }
-    
-    
-    IEnumerator WaitAndFinish()//dummy
-    {
-        yield return new WaitForSeconds(1);
-        _taskQueue.Peek().OnActionFinish();
-    }
-
-    public void OnArrive()
-    {
-        _taskQueue.Peek().OnActionFinish();
-    }
 
     public void OnActionFinished()
     {
-        throw new NotImplementedException();
+        _taskQueue.Peek().OnActionFinish();
     }
 }

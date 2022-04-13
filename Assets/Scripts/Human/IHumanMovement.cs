@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IHumanMovement
 {
-    void AddListener(IMovementListener listener);
+    void AddListener(IActionListener listener);
     void MoveTo(Transform targetTransform);
     float GetSpeed();
 }

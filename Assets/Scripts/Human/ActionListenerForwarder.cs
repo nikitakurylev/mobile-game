@@ -3,28 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovementListenerForwarder : MonoBehaviour, IMovementListener
+public class ActionListenerForwarder : MonoBehaviour, IActionListener
 {
     [SerializeField] private MonoBehaviour _listener;
-    private IMovementListener _movementListener;
+    private IActionListener _actionListener;
 
     private void OnValidate()
     {
         if (_listener == null)
             throw new UnityException("No Movement Listener assigned");
         GameObject listenerGameObject = _listener.gameObject;
-        _listener = listenerGameObject.GetComponent<IMovementListener>() as MonoBehaviour;
+        _listener = listenerGameObject.GetComponent<IActionListener>() as MonoBehaviour;
         if (_listener == null)
             throw new UnityException("No IMovementListener attached to " + listenerGameObject.name);
     }
 
-    public void OnArrive()
+    private void Awake()
     {
-        _movementListener.OnArrive();
+        GameObject listenerGameObject = _listener.gameObject;
+        _actionListener = listenerGameObject.GetComponent<IActionListener>();
     }
 
     public void OnActionFinished()
     {
-        _movementListener.OnActionFinished();
+        _actionListener.OnActionFinished();
     }
 }

@@ -9,11 +9,11 @@ public class SimpleMovement : MonoBehaviour, IHumanMovement
     [SerializeField] private float _range = 1f;
     private bool _isMoving = false;
     private Transform _target;
-    private List<IMovementListener> _listeners;
+    private List<IActionListener> _listeners;
 
     private void Awake()
     {
-        _listeners = new List<IMovementListener>();
+        _listeners = new List<IActionListener>();
     }
 
     private void FixedUpdate()
@@ -27,14 +27,14 @@ public class SimpleMovement : MonoBehaviour, IHumanMovement
             transform.position = newPosition;
             if ((transform.position - _target.position).sqrMagnitude <= _range * _range)
             {
-                foreach (IMovementListener listener in _listeners)
-                    listener.OnArrive();
+                foreach (IActionListener listener in _listeners)
+                    listener.OnActionFinished();
                 _isMoving = false;
             }
         }
     }
 
-    public void AddListener(IMovementListener listener)
+    public void AddListener(IActionListener listener)
     {
         _listeners.Add(listener);
     }
