@@ -28,7 +28,7 @@ public class HumanController : MonoBehaviour, IActionListener
     public int InventoryCapacity
     {
         get => _storage.StorageCapacity;
-        set => _storage.StorageCapacity = value;
+        //set => _storage.StorageCapacity = value;
     }
 
     private void OnValidate()

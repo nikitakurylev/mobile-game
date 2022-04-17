@@ -4,23 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[RequireComponent(typeof(Storage))]
 public class StorageTarget : HumanTarget
 {
-    private Storage _storage;
+    [SerializeField] private Storage _storage;
     private int _occupied = 0;
     
     public ResourceEnum Resource => _storage.ResourceType;
     
-    private void OnValidate()
-    {
-        if (GetComponent<Storage>() == null)
-            throw new UnityException("No Storage");
-    }
-
     private void Awake()
     {
-        _storage = GetComponent<Storage>();
+        if (_storage == null)
+            throw new UnityException("No Storage assigned");
     }
 
     public void Occupy(int count)

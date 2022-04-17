@@ -7,15 +7,19 @@ public class Storage : MonoBehaviour
 {
     [SerializeField] private ResourceEnum _resourceType = ResourceEnum.None;
     [SerializeField] private int _storageCapacity = 3;
-    [SerializeField] private StorageIndicator _storageIndicator;
+    [SerializeField] private List<StorageIndicator> _storageIndicators;
     private int _itemCount = 0;
-    
+
     public ResourceEnum ResourceType
     {
         get => _resourceType;
-        set => _resourceType = value;
+        set
+        {
+            _resourceType = value;
+            UpdateIndicators();
+        }
     }
-    
+
     public int ItemCount
     {
         get => _itemCount;
@@ -24,24 +28,29 @@ public class Storage : MonoBehaviour
             if (value > StorageCapacity)
                 throw new UnityException("Trying to store more than capacity");
             _itemCount = value;
-            _storageIndicator?.UpdateIndicator(this);
+            UpdateIndicators();
         }
     }
 
     public int StorageCapacity
     {
         get => _storageCapacity;
-        set
+        /*set
         {
             if (value < _itemCount)
                 throw new UnityException("Trying to make capacity less than stored");
             _storageCapacity = value;
-        }
+        }*/
     }
 
     private void Start()
     {
-        _storageIndicator?.UpdateIndicator(this);
+        _storageIndicators.ForEach(indicator => indicator.UpdateIndicator(this));
+    }
+
+    private void UpdateIndicators()
+    {
+        _storageIndicators.ForEach(indicator => indicator.UpdateIndicator(this));
     }
 
     public bool HasFreeSpace()

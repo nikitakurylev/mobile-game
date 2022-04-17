@@ -9,7 +9,9 @@ public class MeshIndicator : StorageIndicator
     [SerializeField] private int _totalStages = 3;
     [SerializeField] private float _roundingOffset = 0.4f;
     private int _lastStage = -1;
+    private int _totalCapacity = 0;
     private MeshGenerator _meshGenerator;
+    private HashSet<Storage> _registeredStorages;
 
     private void OnValidate()
     {
@@ -20,11 +22,21 @@ public class MeshIndicator : StorageIndicator
     private void Awake()
     {
         _meshGenerator = GetComponent<MeshGenerator>();
+        _registeredStorages = new HashSet<Storage>();
     }
 
     public override void UpdateIndicator(Storage storage)
     {
-        int currentStage = Mathf.RoundToInt(_totalStages * 1f * storage.ItemCount / storage.StorageCapacity + _roundingOffset);
+        if (!_registeredStorages.Contains(storage))
+        {
+            _totalCapacity += storage.StorageCapacity;
+            _registeredStorages.Add(storage);
+        }
+
+        int itemCount = 0;
+        foreach (Storage registeredStorage in _registeredStorages)
+            itemCount += registeredStorage.ItemCount;
+        int currentStage = Mathf.RoundToInt(_totalStages * 1f * itemCount / _totalCapacity + _roundingOffset);
         if (currentStage != _lastStage)
         {
             _meshGenerator.GenerateMesh(new Vector3Int(_meshGenerator.Dimensions.x,
