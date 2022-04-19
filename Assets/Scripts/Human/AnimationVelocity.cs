@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(IHumanMovement))]
+[RequireComponent(typeof(HumanMovement))]
 public class AnimationVelocity : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
@@ -13,7 +13,7 @@ public class AnimationVelocity : MonoBehaviour
 
     private void OnValidate()
     {
-        if (GetComponent<IHumanMovement>() == null)
+        if (GetComponent<HumanMovement>() == null)
             throw new UnityException("No Human Movement");
     }
 
@@ -22,7 +22,7 @@ public class AnimationVelocity : MonoBehaviour
         if(_animator == null)
             throw new UnityException("No Animator");
         _lastPosition = transform.position;
-        _movementSpeed =  GetComponent<IHumanMovement>().GetSpeed();
+        _movementSpeed =  GetComponent<HumanMovement>().GetSpeed();
         _movementSpeed *= _movementSpeed;
     }
 

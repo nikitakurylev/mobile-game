@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-[RequireComponent(typeof(IHumanMovement), typeof(Storage))]
+[RequireComponent(typeof(HumanMovement), typeof(Storage))]
 public class HumanController : MonoBehaviour, IActionListener
 {
     [SerializeField] private Animator _animator;
     private Queue<HumanTask> _taskQueue;
-    private IHumanMovement _movement;
+    private HumanMovement _movement;
     private HumanPlanner _humanPlanner;
     private Storage _storage;
 
@@ -33,7 +33,7 @@ public class HumanController : MonoBehaviour, IActionListener
 
     private void OnValidate()
     {
-        if (GetComponent<IHumanMovement>() == null)
+        if (GetComponent<HumanMovement>() == null)
             throw new UnityException("No Human Movement");
         if (GetComponent<Storage>() == null)
             throw new UnityException("No Storage");
@@ -41,7 +41,7 @@ public class HumanController : MonoBehaviour, IActionListener
 
     private void Awake()
     {
-        _movement = GetComponent<IHumanMovement>();
+        _movement = GetComponent<HumanMovement>();
         _storage = GetComponent<Storage>();
         _humanPlanner = FindObjectOfType<HumanPlanner>();
         if (_humanPlanner == null)

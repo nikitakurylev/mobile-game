@@ -50,8 +50,34 @@ AnimationClip:
     path: BodyBone/RightHandBone
   m_PositionCurves: []
   m_ScaleCurves: []
-  m_FloatCurves: []
-  m_PPtrCurves: []
+  m_FloatCurves:
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_Enabled
+    path: BodyBone/RightHandBone/RightHand/Plane
+    classID: 23
+    script: {fileID: 0}
+  m_PPtrCurves:
+  - curve:
+    - time: 0
+      value: {fileID: 2100000, guid: d1aaa4ef513aabb4ca5b61f4dc1be571, type: 2}
+    attribute: m_Materials.Array.data[0]
+    path: BodyBone/RightHandBone/RightHand/Plane
+    classID: 23
+    script: {fileID: 0}
   m_SampleRate: 60
   m_WrapMode: 0
   m_Bounds:
@@ -66,7 +92,22 @@ AnimationClip:
       typeID: 4
       customType: 4
       isPPtrCurve: 0
-    pptrCurveMapping: []
+    - serializedVersion: 2
+      path: 1722561943
+      attribute: 3305885265
+      script: {fileID: 0}
+      typeID: 23
+      customType: 0
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 1722561943
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 23
+      customType: 21
+      isPPtrCurve: 1
+    pptrCurveMapping:
+    - {fileID: 2100000, guid: d1aaa4ef513aabb4ca5b61f4dc1be571, type: 2}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
@@ -198,6 +239,25 @@ AnimationClip:
     attribute: localEulerAnglesRaw.z
     path: BodyBone/RightHandBone
     classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_Enabled
+    path: BodyBone/RightHandBone/RightHand/Plane
+    classID: 23
     script: {fileID: 0}
   m_EulerEditorCurves:
   - curve:
