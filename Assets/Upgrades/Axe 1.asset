@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7df526272babc084d9127a9cef2edf3d, type: 3}
   m_Name: Axe 1
   m_EditorClassIdentifier: 
+  _upgradeIcon: {fileID: 0}
   _name: Axe
-  _neededUpgrade: {fileID: 0}
+  _nextUpgrades:
+  - {fileID: 11400000, guid: f5f7723127981ce4cbdd7b0a1319fdc0, type: 2}
   _neededResources:
   - _resourceType: 1
-    _amount: 1
+    _amount: 4
   - _resourceType: 2
-    _amount: 1
+    _amount: 3

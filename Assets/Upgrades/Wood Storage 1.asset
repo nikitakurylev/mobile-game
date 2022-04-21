@@ -10,7 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7df526272babc084d9127a9cef2edf3d, type: 3}
-  m_Name: Upgrade
+  m_Name: Wood Storage 1
   m_EditorClassIdentifier: 
-  _name: 
-  _neededUpgrades: []
+  _upgradeIcon: {fileID: 0}
+  _name: Axe
+  _nextUpgrades: []
+  _neededResources:
+  - _resourceType: 1
+    _amount: 4
+  - _resourceType: 2
+    _amount: 3

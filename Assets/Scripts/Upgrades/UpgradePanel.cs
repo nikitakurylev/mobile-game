@@ -10,13 +10,13 @@ public class UpgradePanel : MonoBehaviour
     [SerializeField] private List<Text> _resourceCounters;
     [SerializeField] private Text _upgradeName;
 
-    public void SetUpgrade(Upgrade upgrade)
+    public void SetUpgrade(UpgradeInfo upgradeInfo)
     {
-        _upgradeName.text = upgrade.Name;
-        for (int i = 0; i < upgrade.NeededResources.Count; i++)
+        _upgradeName.text = upgradeInfo.Name;
+        for (int i = 0; i < upgradeInfo.NeededResources.Count; i++)
         {
-            _resourceImages[i].sprite = _resourceIcons[(int) upgrade.NeededResources[i].ResourceType];
-            _resourceCounters[i].text = upgrade.NeededResources[i].Amount.ToString();
+            _resourceImages[i].sprite = _resourceIcons[(int) upgradeInfo.NeededResources[i].ResourceType];
+            _resourceCounters[i].text = upgradeInfo.NeededResources[i].Amount.ToString();
         }
     }
 }

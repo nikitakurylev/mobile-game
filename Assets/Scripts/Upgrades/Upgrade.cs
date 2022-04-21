@@ -1,18 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-[CreateAssetMenu(fileName = "Upgrade", menuName = "Upgrades/Upgrade", order = 1)]
-public class Upgrade : ScriptableObject
+public class Upgrade : StorageIndicator
 {
-    [SerializeField] private Sprite _upgradeIcon;
-    [SerializeField] private string _name;
-    [SerializeField] private Upgrade _neededUpgrade;
-    [SerializeField] private List<NeededResource> _neededResources;
+    [SerializeField] private UnityEvent _onBuildingFinish;
+    [SerializeField] private UpgradeInfo _upgradeInfo;
+    private HashSet<Storage> _registeredStorages;
+    private int _totalCapacity = 0;
 
-    public string Name => _name;
+    public UpgradeInfo UpgradeInfo => _upgradeInfo;
 
-    public Upgrade NeededUpgrade => _neededUpgrade;
+    private void Awake()
+    {
+        _registeredStorages = new HashSet<Storage>();
+    }
+    
+    public override void UpdateIndicator(Storage storage)
+    {
+        if (!_registeredStorages.Contains(storage))
+        {
+            _totalCapacity += storage.StorageCapacity;
+            _registeredStorages.Add(storage);
+        }
 
-    public List<NeededResource> NeededResources => _neededResources;
+        int itemCount = 0;
+        foreach (Storage registeredStorage in _registeredStorages)
+            itemCount += registeredStorage.ItemCount;
+        if(itemCount >= _totalCapacity)
+            FinishBuilding();
+    }
+
+    public void FinishBuilding()
+    {
+        foreach (StorageTarget storageTarget in GetComponents<StorageTarget>())
+            storageTarget.enabled = false;
+        FindObjectOfType<UpgradePanelManager>(true).FinishUpgrade(this);
+        _onBuildingFinish.Invoke();
+    }
 }
