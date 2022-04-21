@@ -28,14 +28,15 @@ public class HarvestTask : HumanTask
         if (_isMoving)
         {
             _isMoving = false;
-            HumanController.ExecuteAction("harvest");
+            Debug.Log("harvest_" + _resourceTarget.Resource);
+            HumanController.ExecuteAction("harvest_" + _resourceTarget.Resource);
         }
         else
         {
             _resourceToHarvest--;
             _resourceTarget.Harvest();
             if (_resourceToHarvest > 0)
-                HumanController.ExecuteAction("harvest");
+                HumanController.ExecuteAction("harvest_" + _resourceTarget.Resource);
             else
                 HumanController.FinishTask();
         }
