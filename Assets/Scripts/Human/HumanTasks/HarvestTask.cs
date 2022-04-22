@@ -28,7 +28,6 @@ public class HarvestTask : HumanTask
         if (_isMoving)
         {
             _isMoving = false;
-            Debug.Log("harvest_" + _resourceTarget.Resource);
             HumanController.ExecuteAction("harvest_" + _resourceTarget.Resource);
         }
         else

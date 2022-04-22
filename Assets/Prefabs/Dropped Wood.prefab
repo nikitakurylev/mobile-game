@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 6660931077717362189}
   - component: {fileID: 6660931077717362188}
   - component: {fileID: 6660931077717362191}
-  - component: {fileID: 6660931077717362190}
   - component: {fileID: 6660931077717362187}
+  - component: {fileID: -4184363213052020119}
   m_Layer: 0
   m_Name: Dropped Wood
   m_TagString: Untagged
@@ -97,19 +97,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6660931077717362190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6660931077717362193}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e280b4481d5dd004883011718e708220, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _resource: 1
 --- !u!54 &6660931077717362187
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -126,3 +113,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-4184363213052020119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6660931077717362193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4da1a5a9974caeb4bb4fb72cd01d002a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _resource: 1

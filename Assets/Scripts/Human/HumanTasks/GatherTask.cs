@@ -7,11 +7,13 @@ public class GatherTask : HumanTask
 {
     private DroppedTarget _droppedTarget;
     private bool _isMoving = false;
+    private int _amount;
 
-    public GatherTask(DroppedTarget droppedTarget)
+    public GatherTask(DroppedTarget droppedTarget, int amount)
     {
         _droppedTarget = droppedTarget;
-        _droppedTarget.Occupy();
+        _amount = amount;
+        _droppedTarget.Occupy(amount);
     }
 
     protected override void StartTask()
@@ -30,8 +32,8 @@ public class GatherTask : HumanTask
         else
         {
             HumanController.InventoryResource = _droppedTarget.Resource;
-            HumanController.InventoryCount++;
-            _droppedTarget.PickUp();
+            HumanController.InventoryCount += _amount;
+            _droppedTarget.PickUp(_amount);
             FinishTask();
         }
     }

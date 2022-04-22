@@ -39,7 +39,7 @@ public class HumanPlanner : MonoBehaviour
         {
             _freeStorageTargets =
                 FindObjectsOfType<StorageTarget>().Where(target => target.GetFreeSpace() > 0).ToList();
-            _freeDroppedTargets = FindObjectsOfType<DroppedTarget>().Where(target => target.IsFree()).ToList();
+            _freeDroppedTargets = FindObjectsOfType<DroppedTarget>().Where(target => target.GetAvailableResources() > 0).ToList();
             _freeResourceTargets = FindObjectsOfType<ResourceTarget>()
                 .Where(target => target.GetAvailableResources() > 0).ToList();
             _updated = true;
@@ -57,14 +57,19 @@ public class HumanPlanner : MonoBehaviour
                 .OrderByDescending(target => target.GetAvailableResources()).ToList();
             if (droppedTargets.Count > 0)
             {
-                targetCount = Math.Min(targetCount, droppedTargets.Count);
-                for (int i = 0; i < targetCount; i++)
+                int droppedTargetsToCollect = targetCount;
+                for (int i = 0; i < droppedTargets.Count; i++)
                 {
-                    humanController.EnqueueTask(new GatherTask(droppedTargets[i]));
-                    _freeDroppedTargets.Remove(droppedTargets[i]);
+                    int amountToOccupy = Math.Min(targetCount, droppedTargets[i].GetAvailableResources());
+                    humanController.EnqueueTask(new GatherTask(droppedTargets[i], amountToOccupy));
+                    if(droppedTargets[i].GetAvailableResources() <= 0)
+                        _freeDroppedTargets.Remove(droppedTargets[i]);
+                    targetCount -= amountToOccupy;
+                    if(targetCount <= 0)
+                        break;
                 }
 
-                humanController.EnqueueTask(new StoreTask(storageTarget, targetCount));
+                humanController.EnqueueTask(new StoreTask(storageTarget, droppedTargetsToCollect - targetCount));
                 if (storageTarget.GetFreeSpace() <= 0)
                     _freeStorageTargets.Remove(storageTarget);
             }

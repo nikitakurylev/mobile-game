@@ -2,30 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DroppedTarget : HumanTarget
+public abstract class DroppedTarget : HumanTarget
 {
-    [SerializeField] private ResourceEnum _resource;
-
-    public ResourceEnum Resource => _resource;
-
-    protected bool free = true;
-    
-    public void Occupy()
-    {
-        if (!IsFree())
-            throw new UnityException("Dropped already occupied");
-        free = false;
-    }
-
-    public bool IsFree()
-    {
-        return free;
-    }
-
-    public void PickUp()
-    {
-        if (IsFree())
-            throw new UnityException("Dropped picked without occupying first");
-        Destroy(gameObject);
-    }
+    public abstract ResourceEnum Resource { get; }
+    public abstract void Occupy(int amount);
+    public abstract void PickUp(int amount);
+    public abstract int GetAvailableResources();
 }

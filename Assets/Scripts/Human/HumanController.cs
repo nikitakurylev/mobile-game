@@ -56,10 +56,6 @@ public class HumanController : MonoBehaviour, IActionListener
         _movement.AddListener(this);
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-    }
-
     public void EnqueueTask(HumanTask humanTask)
     {
         _taskQueue.Enqueue(humanTask);
