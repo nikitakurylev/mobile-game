@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Wood Storage 1
   m_EditorClassIdentifier: 
   _upgradeIcon: {fileID: 0}
-  _name: Axe
-  _nextUpgrades: []
+  _name: Wood Storage
+  _nextUpgrades:
+  - {fileID: 11400000, guid: 42ad77fa25de6cb489a11c5fab1761c7, type: 2}
   _neededResources:
   - _resourceType: 1
     _amount: 4
   - _resourceType: 2
-    _amount: 3
+    _amount: 4

@@ -8,6 +8,7 @@ public class DroppedResourceTarget : DroppedTarget
     private bool _isFree = true;
 
     public override ResourceEnum Resource => _resource;
+    public override int Priority { get; } = 0;
 
     public override void Occupy(int amount)
     {

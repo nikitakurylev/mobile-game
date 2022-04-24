@@ -9,6 +9,7 @@ public class DroppedStorageTarget : DroppedTarget
     private int _occupied;
 
     public override ResourceEnum Resource => _storage.ResourceType;
+    public override int Priority { get; } = 1;
 
 
     private void OnValidate()

@@ -8,6 +8,7 @@ public class ResourceTarget : HumanTarget
 {
     [SerializeField] private Storage _storage;
     [SerializeField] private GameObject _dropPrefab;
+    [SerializeField] private Animator _animator;
     private int _occupied = 0;
 
     public ResourceEnum Resource => _storage.ResourceType;
@@ -34,6 +35,8 @@ public class ResourceTarget : HumanTarget
         Instantiate(_dropPrefab,
             transform.position + new Vector3(Random.Range(-1f, 1f), 0.5f, Random.Range(-1f, 1f)).normalized * 3,
             Quaternion.AngleAxis(Random.Range(0f, 360f), Vector3.up));
+        if(_animator != null)
+            _animator.SetTrigger("harvest");
     }
 
     public void Occupy(int count)
