@@ -58,6 +58,9 @@ public class NavigationMovement : HumanMovement
 
     public override float GetSpeed()
     {
-        return _agent.velocity.sqrMagnitude / (_agent.speed * _agent.speed);
+        float sqrMagnitude = _agent.velocity.sqrMagnitude;
+        if (sqrMagnitude > 0.5f && _agent.remainingDistance > _agent.radius)
+            return sqrMagnitude / (_agent.speed * _agent.speed);
+        return 0;
     }
 }
