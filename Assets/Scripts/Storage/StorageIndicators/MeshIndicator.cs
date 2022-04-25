@@ -36,7 +36,7 @@ public class MeshIndicator : StorageIndicator
         int itemCount = 0;
         foreach (Storage registeredStorage in _registeredStorages)
             itemCount += registeredStorage.ItemCount;
-        int currentStage = Mathf.RoundToInt(_totalStages * 1f * itemCount / _totalCapacity + _roundingOffset);
+        int currentStage = Math.Max(0, Mathf.RoundToInt(_totalStages * 1f * itemCount / _totalCapacity + _roundingOffset));
         if (currentStage != _lastStage)
         {
             _meshGenerator.GenerateMesh(new Vector3Int(_meshGenerator.Dimensions.x,

@@ -38,7 +38,8 @@ public class HumanPlanner : MonoBehaviour
         if (!_updated)
         {
             _freeStorageTargets =
-                FindObjectsOfType<StorageTarget>().Where(target => target.GetFreeSpace() > 0).OrderBy((target => target.Priority)).ToList();
+                FindObjectsOfType<StorageTarget>().Where(target => target.GetFreeSpace() > 0)
+                    .OrderBy((target => target.Priority)).ToList();
             _freeDroppedTargets = FindObjectsOfType<DroppedTarget>().Where(target => target.GetAvailableResources() > 0)
                 .ToList();
             _freeResourceTargets = FindObjectsOfType<ResourceTarget>()
@@ -56,14 +57,15 @@ public class HumanPlanner : MonoBehaviour
             int targetCount = Math.Min(humanController.InventoryCapacity, storageTarget.GetFreeSpace());
             List<ResourceTarget> resourceTargets = _freeResourceTargets
                 .Where(target => target.Resource == storageTarget.Resource)
-                .OrderByDescending(target => target.GetAvailableResources()).ToList();
+                .OrderBy(target => (target.transform.position - humanController.transform.position).sqrMagnitude)
+                .ToList();
             bool isTaskChosen = false;
             if (droppedTargets.Count > 0)
             {
                 int droppedTargetsToCollect = targetCount;
                 for (int i = 0; i < droppedTargets.Count; i++)
                 {
-                    if(storageTarget.gameObject == droppedTargets[i].gameObject)
+                    if (storageTarget.gameObject == droppedTargets[i].gameObject)
                         continue;
                     isTaskChosen = true;
                     int amountToOccupy = Math.Min(targetCount, droppedTargets[i].GetAvailableResources());

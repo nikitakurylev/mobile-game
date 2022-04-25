@@ -15,8 +15,11 @@ public class Storage : MonoBehaviour
         get => _resourceType;
         set
         {
-            _resourceType = value;
-            UpdateIndicators();
+            if (value != _resourceType)
+            {
+                UpdateIndicators();
+                _resourceType = value;
+            }
         }
     }
 
@@ -27,20 +30,27 @@ public class Storage : MonoBehaviour
         {
             if (value > StorageCapacity)
                 throw new UnityException("Trying to store more than capacity");
-            _itemCount = value;
-            UpdateIndicators();
+            if (_itemCount != value)
+            {
+                _itemCount = value;
+                UpdateIndicators();
+            }
         }
     }
 
     public int StorageCapacity
     {
         get => _storageCapacity;
-        /*set
+        set
         {
             if (value < _itemCount)
                 throw new UnityException("Trying to make capacity less than stored");
-            _storageCapacity = value;
-        }*/
+            if (value != _storageCapacity)
+            {
+                UpdateIndicators();
+                _storageCapacity = value;
+            }
+        }
     }
 
     private void Start()

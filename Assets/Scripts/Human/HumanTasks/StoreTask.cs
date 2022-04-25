@@ -31,8 +31,8 @@ public class StoreTask : HumanTask
         }
         else
         {
-            HumanController.InventoryResource = ResourceEnum.None;
             HumanController.InventoryCount -= _resourceCount;
+            HumanController.InventoryResource = ResourceEnum.None;
             _storageTarget.Store(_resourceCount);
             FinishTask();
         }

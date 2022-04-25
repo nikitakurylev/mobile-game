@@ -95,4 +95,9 @@ public class MeshGenerator : MonoBehaviour
             normals = Normals.ToArray()
         };
     }
+
+    public void GenerateMesh()
+    {
+        GenerateMesh(Dimensions);
+    }
 }
