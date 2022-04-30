@@ -1,9 +1,10 @@
 using System;
 using UnityEngine;
-using UnityEditor;
-using UnityEditor.Experimental.AssetImporters;
 using System.IO;
 using System.Linq;
+using UnityEngine;
+
+#if UNITY_EDITOR
 using UnityEditor.AssetImporters;
 
 [ScriptedImporter( 1, "xraw" )]
@@ -22,3 +23,4 @@ public class VoxelMapImporter : ScriptedImporter {
         ctx.SetMainObject(voxelMap);
     }
 }
+#endif
