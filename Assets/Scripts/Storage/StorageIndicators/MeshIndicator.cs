@@ -33,14 +33,20 @@ public class MeshIndicator : StorageIndicator
             _registeredStorages.Add(storage);
         }
 
+        HashSet<ResourceEnum> resourceEnums = new HashSet<ResourceEnum>();
         int itemCount = 0;
         foreach (Storage registeredStorage in _registeredStorages)
+        {
+            if (registeredStorage.ItemCount >= _totalCapacity / _totalStages)
+                resourceEnums.Add(registeredStorage.ResourceType);
             itemCount += registeredStorage.ItemCount;
+        }
+
         int currentStage = Math.Max(0, Mathf.RoundToInt(_totalStages * 1f * itemCount / _totalCapacity + _roundingOffset));
         if (currentStage != _lastStage)
         {
             _meshGenerator.GenerateMesh(new Vector3Int(_meshGenerator.Dimensions.x,
-                _meshGenerator.Dimensions.y * currentStage / _totalStages, _meshGenerator.Dimensions.z));
+                _meshGenerator.Dimensions.y * currentStage / _totalStages, _meshGenerator.Dimensions.z), resourceEnums);
             _lastStage = currentStage;
         }
     }

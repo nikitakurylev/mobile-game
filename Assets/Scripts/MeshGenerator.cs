@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter))]
@@ -16,7 +18,7 @@ public class MeshGenerator : MonoBehaviour
         _meshFilter = GetComponent<MeshFilter>();
         if (_meshFilter == null)
             throw new UnityException("No Mesh Filter");
-        if (_voxelMap != null)
+        if (_voxelMap != null && ResourceIndex.Instance != null)
             GenerateMesh(_voxelMap.Dimensions);
     }
 
@@ -25,7 +27,7 @@ public class MeshGenerator : MonoBehaviour
         _meshFilter = GetComponent<MeshFilter>();
     }
 
-    public void GenerateMesh(Vector3Int frame)
+    public void GenerateMesh(Vector3Int frame, IEnumerable<ResourceEnum> resourceEnums)
     {
         float at = Time.realtimeSinceStartup;
         List<int> Triangles = new List<int>();
@@ -58,9 +60,10 @@ public class MeshGenerator : MonoBehaviour
             const float uvPadding = 0.0001f;
 
             float faceSize = 1f / (BlockTypeCount + 1);
-            if (_voxelMap.GetVoxelCropped(x, y, z, frame) != 0)
+            if (resourceEnums.Contains(ResourceIndex.BlockToResource[_voxelMap.GetVoxelCropped(x, y, z, frame)]))
                 for (int o = 0; o < 6; o++)
-                    if (_voxelMap.GetVoxelCropped(x + Faces[o, 4], y + Faces[o, 5], z + Faces[o, 6], frame) == 0)
+                    if (!(resourceEnums.Contains(ResourceIndex.BlockToResource[
+                        _voxelMap.GetVoxelCropped(x + Faces[o, 4], y + Faces[o, 5], z + Faces[o, 6], frame)])))
                         AddQuad(o, Verticies.Count, _voxelMap.GetVoxel(x, y, z), faceSize);
 
             void AddQuad(int facenum, int v, byte blockType, float faceSize)
@@ -94,6 +97,11 @@ public class MeshGenerator : MonoBehaviour
             uv = uv.ToArray(),
             normals = Normals.ToArray()
         };
+    }
+
+    public void GenerateMesh(Vector3Int frame)
+    {
+        GenerateMesh(frame, Enum.GetValues(typeof(ResourceEnum)).Cast<ResourceEnum>().Skip(1));
     }
 
     public void GenerateMesh()

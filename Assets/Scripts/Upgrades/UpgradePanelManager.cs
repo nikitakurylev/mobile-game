@@ -20,6 +20,12 @@ public class UpgradePanelManager : MonoBehaviour
 
     private void Awake()
     {
+        if(_panelButtons == null)
+            Init();
+    }
+
+    private void Init()
+    {
         _panelButtons = new List<Button>();
         
         foreach (Upgrade upgrade in _upgrades)
@@ -38,6 +44,8 @@ public class UpgradePanelManager : MonoBehaviour
 
     public void FinishUpgrade(Upgrade upgrade)
     {
+        if(_panelButtons == null)
+            Init();
         _panelButtons[_upgrades.IndexOf(upgrade)].interactable = false;
         foreach (UpgradeInfo nextUpgradeInfo in upgrade.UpgradeInfo.NextUpgrades)
         {
