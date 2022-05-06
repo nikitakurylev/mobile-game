@@ -35,21 +35,21 @@ public class UpgradePanelManager : MonoBehaviour
             Button button = panel.GetComponentInChildren<Button>();
             button.onClick.AddListener(() => upgrade.gameObject.SetActive(true));
             button.onClick.AddListener(() => _onUpgradeChosen.Invoke());
-            button.interactable = false;
+            button.gameObject.SetActive(false);
             _panelButtons.Add(button);
         }
 
-        _panelButtons[0].interactable = true;
+        _panelButtons[0].gameObject.SetActive(true);
     }
 
     public void FinishUpgrade(Upgrade upgrade)
     {
         if(_panelButtons == null)
             Init();
-        _panelButtons[_upgrades.IndexOf(upgrade)].interactable = false;
+        _panelButtons[_upgrades.IndexOf(upgrade)].transform.parent.gameObject.SetActive(false);
         foreach (UpgradeInfo nextUpgradeInfo in upgrade.UpgradeInfo.NextUpgrades)
         {
-            _panelButtons[_upgrades.FindIndex(nextUpgrade => nextUpgrade.UpgradeInfo == nextUpgradeInfo)].interactable = true; // TODO refactor
+            _panelButtons[_upgrades.FindIndex(nextUpgrade => nextUpgrade.UpgradeInfo == nextUpgradeInfo)].gameObject.SetActive(true); // TODO refactor
         }
         
         _onUpgradeFinish.Invoke();

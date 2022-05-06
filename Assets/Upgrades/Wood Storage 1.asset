@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _upgradeIcon: {fileID: 0}
   _name: Wood Storage
+  _description: Can be used to store wood
   _nextUpgrades:
   - {fileID: 11400000, guid: 42ad77fa25de6cb489a11c5fab1761c7, type: 2}
   _neededResources:

@@ -18,4 +18,6 @@ public class UpgradeInfo : ScriptableObject
     public List<UpgradeInfo> NextUpgrades => _nextUpgrades;
 
     public List<NeededResource> NeededResources => _neededResources;
+
+    public string Description => _description;
 }

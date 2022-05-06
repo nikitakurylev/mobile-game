@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _upgradeIcon: {fileID: 0}
   _name: Workbench
+  _description: Unlocks more recipies
   _nextUpgrades:
   - {fileID: 11400000, guid: b5e7608928fd17145b324f20c55f7663, type: 2}
   _neededResources:
