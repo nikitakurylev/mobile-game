@@ -47,15 +47,15 @@ public class Storage : MonoBehaviour
                 throw new UnityException("Trying to make capacity less than stored");
             if (value != _storageCapacity)
             {
-                UpdateIndicators();
                 _storageCapacity = value;
+                UpdateIndicators();
             }
         }
     }
 
     private void Start()
     {
-        _storageIndicators.ForEach(indicator => indicator.UpdateIndicator(this));
+        UpdateIndicators();
     }
 
     private void UpdateIndicators()

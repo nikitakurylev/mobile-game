@@ -10,6 +10,7 @@ public class MeshGenerator : MonoBehaviour
     [SerializeField] private VoxelMap _voxelMap;
     private const byte BlockTypeCount = 255;
     private MeshFilter _meshFilter;
+    private Dictionary<ResourceEnum, Vector3Int> frames;
 
     public Vector3Int Dimensions => _voxelMap.Dimensions;
 
@@ -19,16 +20,22 @@ public class MeshGenerator : MonoBehaviour
         if (_meshFilter == null)
             throw new UnityException("No Mesh Filter");
         if (_voxelMap != null && ResourceIndex.Instance != null)
-            GenerateMesh(_voxelMap.Dimensions);
+            GenerateMesh();
     }
 
     private void Awake()
     {
         _meshFilter = GetComponent<MeshFilter>();
+        frames = new Dictionary<ResourceEnum, Vector3Int>();
+        foreach (ResourceEnum resourceEnum in Enum.GetValues(typeof(ResourceEnum)).Cast<ResourceEnum>())
+        {
+            frames.Add(resourceEnum, new Vector3Int());
+        }
     }
 
-    public void GenerateMesh(Vector3Int frame, IEnumerable<ResourceEnum> resourceEnums)
+    public void GenerateMesh(Vector3Int frame, ResourceEnum resourceEnum)
     {
+        frames[resourceEnum] = frame;
         float at = Time.realtimeSinceStartup;
         List<int> Triangles = new List<int>();
         List<Vector3> Verticies = new List<Vector3>();
@@ -45,9 +52,9 @@ public class MeshGenerator : MonoBehaviour
             {1, 0, 4, 5, -1, 0, 0, 1, 1} //back
         };
 
-        for (int x = 0; x < frame.x; x++)
-        for (int y = 0; y < frame.y; y++)
-        for (int z = 0; z < frame.z; z++)
+        for (int x = 0; x < Dimensions.x; x++)
+        for (int y = 0; y < Dimensions.y; y++)
+        for (int z = 0; z < Dimensions.z; z++)
         {
             Vector3[] VertPos = new Vector3[8]
             {
@@ -60,11 +67,17 @@ public class MeshGenerator : MonoBehaviour
             const float uvPadding = 0.0001f;
 
             float faceSize = 1f / (BlockTypeCount + 1);
-            if (resourceEnums.Contains(ResourceIndex.BlockToResource[_voxelMap.GetVoxelCropped(x, y, z, frame)]))
+
+            Vector3Int currentFrame = frames[ResourceIndex.BlockToResource[_voxelMap.GetVoxel(x, y, z)]];
+            
+            if (_voxelMap.GetVoxelCropped(x, y, z, currentFrame) != 0)
                 for (int o = 0; o < 6; o++)
-                    if (!(resourceEnums.Contains(ResourceIndex.BlockToResource[
-                        _voxelMap.GetVoxelCropped(x + Faces[o, 4], y + Faces[o, 5], z + Faces[o, 6], frame)])))
+                {
+                    int xf = x + Faces[o, 4], yf = y + Faces[o, 5], zf = z + Faces[o, 6];
+                    
+                    if (_voxelMap.GetVoxelCropped(xf, yf, zf, frames[ResourceIndex.BlockToResource[_voxelMap.GetVoxel(xf, yf, zf)]]) == 0)
                         AddQuad(o, Verticies.Count, _voxelMap.GetVoxel(x, y, z), faceSize);
+                }
 
             void AddQuad(int facenum, int v, byte blockType, float faceSize)
             {
@@ -99,13 +112,12 @@ public class MeshGenerator : MonoBehaviour
         };
     }
 
-    public void GenerateMesh(Vector3Int frame)
-    {
-        GenerateMesh(frame, Enum.GetValues(typeof(ResourceEnum)).Cast<ResourceEnum>().Skip(1));
-    }
-
     public void GenerateMesh()
     {
-        GenerateMesh(Dimensions);
+        foreach (ResourceEnum resourceEnum in Enum.GetValues(typeof(ResourceEnum)).Cast<ResourceEnum>())
+        {
+            frames[resourceEnum] = Dimensions;
+        }
+        GenerateMesh(new Vector3Int(), ResourceEnum.None);
     }
 }
