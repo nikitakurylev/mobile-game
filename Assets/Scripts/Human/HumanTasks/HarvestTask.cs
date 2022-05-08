@@ -8,6 +8,7 @@ public class HarvestTask : HumanTask
     private ResourceTarget _resourceTarget;
     private int _resourceToHarvest;
     private bool _isMoving = false;
+    private int _chopsLeft = 0;
 
     public HarvestTask(ResourceTarget resourceTarget, int resourceCount)
     {
@@ -29,11 +30,18 @@ public class HarvestTask : HumanTask
         {
             _isMoving = false;
             HumanController.ExecuteAction("harvest_" + _resourceTarget.Resource);
+            _chopsLeft = 6 - HumanUpgradeManager.GetStat("axe");
         }
         else
         {
-            _resourceToHarvest--;
-            _resourceTarget.Harvest();
+            _chopsLeft--;
+            _resourceTarget.Chop();
+            if (_chopsLeft <= 0)
+            {
+                _resourceToHarvest--;
+                _resourceTarget.Harvest();
+                _chopsLeft = 6 - HumanUpgradeManager.GetStat("axe");
+            }
             if (_resourceToHarvest > 0)
                 HumanController.ExecuteAction("harvest_" + _resourceTarget.Resource);
             else

@@ -12,11 +12,12 @@ public class HumanController : MonoBehaviour, IActionListener
     private HumanMovement _movement;
     private HumanPlanner _humanPlanner;
     private Storage _storage;
+    private Dictionary<ResourceEnum, Storage> _storages;
 
     public ResourceEnum InventoryResource
     {
         get => _storage.ResourceType;
-        set => _storage.ResourceType = value;
+        set => _storage = _storages[value];
     }
 
     public int InventoryCount
@@ -30,6 +31,8 @@ public class HumanController : MonoBehaviour, IActionListener
         get => _storage.StorageCapacity;
         //set => _storage.StorageCapacity = value;
     }
+    
+    
 
     private void OnValidate()
     {
@@ -42,13 +45,18 @@ public class HumanController : MonoBehaviour, IActionListener
     private void Awake()
     {
         _movement = GetComponent<HumanMovement>();
-        _storage = GetComponent<Storage>();
         _humanPlanner = FindObjectOfType<HumanPlanner>();
         if (_humanPlanner == null)
             throw new UnityException("No Human Planner in scene");
         if (_animator == null)
             throw new UnityException("No Animator assigned");
         _taskQueue = new Queue<HumanTask>();
+        _storages = new Dictionary<ResourceEnum, Storage>();
+        foreach (Storage storage in GetComponents<Storage>())
+        {
+            _storages.Add(storage.ResourceType, storage);
+        }
+        InventoryResource = ResourceEnum.None;
     }
 
     private void Start()

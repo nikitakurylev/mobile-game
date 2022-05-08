@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7df526272babc084d9127a9cef2edf3d, type: 3}
-  m_Name: House
+  m_Name: Workbench 1
   m_EditorClassIdentifier: 
-  _upgradeIcon: {fileID: 21300000, guid: baecd55b7f3da0d4b9357116dd7f9f45, type: 3}
-  _name: House
-  _description: Also known as food storage
-  _nextUpgrades: []
+  _upgradeIcon: {fileID: 21300000, guid: 813fa637ba197f643bcc0dab13adc6cb, type: 3}
+  _name: Workbench
+  _description: Unlocks more recipies
+  _nextUpgrades:
+  - {fileID: 11400000, guid: b5e7608928fd17145b324f20c55f7663, type: 2}
   _neededResources:
   - _resourceType: 1
-    _amount: 15
+    _amount: 5
   - _resourceType: 2
-    _amount: 12
+    _amount: 4

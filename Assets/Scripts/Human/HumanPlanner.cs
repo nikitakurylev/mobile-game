@@ -50,6 +50,7 @@ public class HumanPlanner : MonoBehaviour
         if (_freeStorageTargets.Count > 0)
         {
             StorageTarget storageTarget = _freeStorageTargets[0];
+            humanController.InventoryResource = storageTarget.Resource;
             List<DroppedTarget> droppedTargets =
                 _freeDroppedTargets.Where(target => target.Resource == storageTarget.Resource)
                     .OrderBy(target => target.Priority).ThenBy(target =>

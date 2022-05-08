@@ -5,8 +5,7 @@ using UnityEngine;
 public class ResourceIndex : MonoBehaviour
 {
     [SerializeField] private ResourceEnum[] _blockToResource;
- 
-    
+
     private static ResourceIndex instance = null;
 
     public static ResourceIndex Instance => instance;

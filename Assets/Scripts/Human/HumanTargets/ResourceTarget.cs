@@ -9,7 +9,9 @@ public class ResourceTarget : HumanTarget
     [SerializeField] private Storage _storage;
     [SerializeField] private GameObject _dropPrefab;
     [SerializeField] private Animator _animator;
+    [SerializeField] private ParticleSystem _particle;
     private int _occupied = 0;
+    private static readonly int Harvest1 = Animator.StringToHash("harvest");
 
     public ResourceEnum Resource => _storage.ResourceType;
 
@@ -26,6 +28,14 @@ public class ResourceTarget : HumanTarget
         _storage.ItemCount = _storage.StorageCapacity;
     }
 
+    public void Chop()
+    {
+        if(_animator != null)
+            _animator.SetTrigger(Harvest1);
+        if(_particle != null)
+            _particle.Play();
+    }
+    
     public void Harvest()
     {
         _storage.ItemCount--;
@@ -35,8 +45,6 @@ public class ResourceTarget : HumanTarget
         Instantiate(_dropPrefab,
             transform.position + new Vector3(Random.Range(-1f, 1f), 0.5f, Random.Range(-1f, 1f)).normalized * 3,
             Quaternion.AngleAxis(Random.Range(0f, 360f), Vector3.up));
-        if(_animator != null)
-            _animator.SetTrigger("harvest");
     }
 
     public void Occupy(int count)

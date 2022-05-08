@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class UpgradePanelManager : MonoBehaviour
 {
     [SerializeField] private List<Upgrade> _upgrades;
     [SerializeField] private GameObject _upgradePanelPrefab;
+    [SerializeField] private Transform _buttonParent;
     [SerializeField] private UnityEvent _onUpgradeChosen;
     [SerializeField] private UnityEvent _onUpgradeFinish;
     private List<Button> _panelButtons;
@@ -20,8 +22,19 @@ public class UpgradePanelManager : MonoBehaviour
 
     private void Awake()
     {
-        if(_panelButtons == null)
-            Init();
+        Init();
+    }
+
+    private void Start()
+    {
+        foreach (Upgrade upgrade in _upgrades)
+        {
+            if (SaveManager.GetData(upgrade.UpgradeInfo.name) == 1)
+            {
+                upgrade.gameObject.SetActive(true);
+                upgrade.FinishBuilding();
+            }
+        }
     }
 
     private void Init()
@@ -30,7 +43,7 @@ public class UpgradePanelManager : MonoBehaviour
         
         foreach (Upgrade upgrade in _upgrades)
         {
-            GameObject panel = Instantiate(_upgradePanelPrefab, transform);
+            GameObject panel = Instantiate(_upgradePanelPrefab, _buttonParent);
             panel.GetComponent<UpgradePanel>().SetUpgrade(upgrade.UpgradeInfo);
             Button button = panel.GetComponentInChildren<Button>();
             button.onClick.AddListener(() => upgrade.gameObject.SetActive(true));
@@ -44,8 +57,6 @@ public class UpgradePanelManager : MonoBehaviour
 
     public void FinishUpgrade(Upgrade upgrade)
     {
-        if(_panelButtons == null)
-            Init();
         _panelButtons[_upgrades.IndexOf(upgrade)].transform.parent.gameObject.SetActive(false);
         foreach (UpgradeInfo nextUpgradeInfo in upgrade.UpgradeInfo.NextUpgrades)
         {

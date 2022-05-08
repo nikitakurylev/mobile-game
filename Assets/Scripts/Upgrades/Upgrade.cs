@@ -60,7 +60,7 @@ public class Upgrade : StorageIndicator
     public void FinishBuilding()
     {
         foreach (StorageTarget storageTarget in GetComponents<StorageTarget>())
-            storageTarget.enabled = false;
+            Destroy(storageTarget);
         FindObjectOfType<UpgradePanelManager>(true).FinishUpgrade(this);
         _onBuildingFinish.Invoke();
     }
