@@ -119,6 +119,7 @@ MonoBehaviour:
     type: 3}
   _animator: {fileID: 8047617327949935008}
   _particle: {fileID: 4670989147718766082}
+  _refillTime: 45
 --- !u!114 &3731419984772939432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d2041d3e72ea5458ab1f1bd80249ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _offset: 0
+  _offset: 1
 --- !u!95 &8047617327949935008
 Animator:
   serializedVersion: 3

@@ -16,6 +16,11 @@ public class MeshGenerator : MonoBehaviour
 
     private void OnValidate()
     {
+        frames = new Dictionary<ResourceEnum, Vector3Int>();
+        foreach (ResourceEnum resourceEnum in Enum.GetValues(typeof(ResourceEnum)).Cast<ResourceEnum>())
+        {
+            frames.Add(resourceEnum, new Vector3Int());
+        }
         _meshFilter = GetComponent<MeshFilter>();
         if (_meshFilter == null)
             throw new UnityException("No Mesh Filter");
@@ -118,6 +123,6 @@ public class MeshGenerator : MonoBehaviour
         {
             frames[resourceEnum] = Dimensions;
         }
-        GenerateMesh(new Vector3Int(), ResourceEnum.None);
+        GenerateMesh(Dimensions, ResourceEnum.None);
     }
 }

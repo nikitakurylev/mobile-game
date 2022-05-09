@@ -57,6 +57,7 @@ public class UpgradePanelManager : MonoBehaviour
 
     public void FinishUpgrade(Upgrade upgrade)
     {
+        SaveManager.SetData(upgrade.UpgradeInfo.name, 1);
         _panelButtons[_upgrades.IndexOf(upgrade)].transform.parent.gameObject.SetActive(false);
         foreach (UpgradeInfo nextUpgradeInfo in upgrade.UpgradeInfo.NextUpgrades)
         {

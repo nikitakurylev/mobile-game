@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class Stat
 {
     [SerializeField] private string _statName;
@@ -9,6 +10,15 @@ public class Stat
 
     public string StatName => _statName;
 
-    public int BaseValue => _baseValue;
+    public int BaseValue
+    {
+        get => _baseValue;
+        set => _baseValue = value;
+    }
 
+    public Stat(string statName, int baseValue)
+    {
+        _statName = statName;
+        _baseValue = baseValue;
+    }
 }

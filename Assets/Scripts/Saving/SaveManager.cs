@@ -42,6 +42,8 @@ public class SaveManager : MonoBehaviour
 
     public static int GetData(string key)
     {
-        return Instance._saveCache[key];
+        if(Instance._saveCache.ContainsKey(key))
+            return Instance._saveCache[key];
+        return 0;
     }
 }

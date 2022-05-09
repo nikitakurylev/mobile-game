@@ -119,6 +119,7 @@ MonoBehaviour:
     type: 3}
   _animator: {fileID: 256349821621452426}
   _particle: {fileID: 4638066228802853713}
+  _refillTime: 45
 --- !u!114 &3731419984772939432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _resourceType: 1
-  _storageCapacity: 10
+  _storageCapacity: 4
   _storageIndicators:
   - {fileID: 3731419984772939438}
 --- !u!114 &3731419984772939438

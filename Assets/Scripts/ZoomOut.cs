@@ -23,7 +23,7 @@ public class ZoomOut : MonoBehaviour
 
     private IEnumerator ChangeFov()
     {
-        while (Mathf.Abs(_camera.fieldOfView - _fov) > 0.01f)
+        while (Mathf.Abs(_camera.fieldOfView - _fov) > 0.05f)
         {
             _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, _fov, _speed * Time.deltaTime);
             yield return null;

@@ -16,7 +16,7 @@ MonoBehaviour:
   _name: Pickaxe
   _description: Is needed to mine stone
   _nextUpgrades:
-  - {fileID: 11400000, guid: f5f7723127981ce4cbdd7b0a1319fdc0, type: 2}
+  - {fileID: 11400000, guid: a29c1d1c2f16b3c4580111f4c9d7dab8, type: 2}
   _neededResources:
   - _resourceType: 1
     _amount: 15
