@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using System.IO;
 using System.Linq;
-using UnityEngine;
 
 #if UNITY_EDITOR
 using UnityEditor.AssetImporters;
