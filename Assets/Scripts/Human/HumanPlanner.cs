@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,6 +9,7 @@ public class HumanPlanner : MonoBehaviour
     private List<StorageTarget> _freeStorageTargets;
     private List<DroppedTarget> _freeDroppedTargets;
     private List<ResourceTarget> _freeResourceTargets;
+    private BuildTarget _buildTarget;
 
     private void OnValidate()
     {
@@ -35,76 +35,93 @@ public class HumanPlanner : MonoBehaviour
 
     public void OnHumanFinish(HumanController humanController)
     {
-        if (!_updated)
+        if(_buildTarget == null)
+            _buildTarget = FindObjectOfType<BuildTarget>();
+        if (_buildTarget != null && !_buildTarget.Active)
+            _buildTarget = null;
+
+        if (_buildTarget != null)
         {
-            _freeStorageTargets = FindObjectsOfType<StorageTarget>().Where(target => target.GetFreeSpace() > 0).ToList();
-            _freeDroppedTargets = FindObjectsOfType<DroppedTarget>().Where(target => target.GetAvailableResources() > 0)
-                .ToList();
-            _freeResourceTargets = FindObjectsOfType<ResourceTarget>()
-                .Where(target => target.GetAvailableResources() > 0).ToList();
-            _updated = true;
-        }
-
-        if (_freeStorageTargets.Count > 0)
-        {
-            Vector3 humanPos = humanController.transform.position;
-            StorageTarget storageTarget = _freeStorageTargets.Aggregate((i1,i2) => i1.Priority < i2.Priority ? i1 : i2);
-            humanController.InventoryResource = storageTarget.Resource;
-            List<DroppedTarget> droppedTargets =
-                _freeDroppedTargets.Where(target => target.Resource == storageTarget.Resource && target.GetAvailableResources() > 0)
-                    .OrderBy(target => target.Priority).ThenBy(target =>
-                        (target.transform.position - humanPos).sqrMagnitude).ToList();
-            int targetCount = Math.Min(humanController.InventoryCapacity, storageTarget.GetFreeSpace());
-           
-            bool isTaskChosen = false;
-            if (droppedTargets.Count > 0)
-            {
-                int droppedTargetsToCollect = targetCount;
-                for (int i = 0; i < droppedTargets.Count; i++)
-                {
-                    if (storageTarget.gameObject == droppedTargets[i].gameObject)
-                        continue;
-                    isTaskChosen = true;
-                    int amountToOccupy = Math.Min(targetCount, droppedTargets[i].GetAvailableResources());
-                    humanController.EnqueueTask(new GatherTask(droppedTargets[i], amountToOccupy));
-                    if (droppedTargets[i].GetAvailableResources() <= 0)
-                        _freeDroppedTargets.Remove(droppedTargets[i]);
-                    targetCount -= amountToOccupy;
-                    if (targetCount <= 0)
-                        break;
-                }
-
-                if (isTaskChosen)
-                {
-                    humanController.EnqueueTask(new StoreTask(storageTarget, droppedTargetsToCollect - targetCount));
-                    if (storageTarget.GetFreeSpace() <= 0)
-                        _freeStorageTargets.Remove(storageTarget);
-                }
-            }
-
-            if (!isTaskChosen)
-            {
-                ResourceTarget resourceTarget = _freeResourceTargets
-                    .Where(target => target.Resource == storageTarget.Resource)
-                    .Aggregate((i1, i2) =>
-                    {
-                        return (i1.transform.position - humanPos).sqrMagnitude <
-                               (i2.transform.position - humanPos).sqrMagnitude
-                                ? i1
-                                : i2;
-                    });
-                if (resourceTarget)
-                {
-                    targetCount = Math.Min(targetCount, resourceTarget.GetAvailableResources());
-                    humanController.EnqueueTask(new HarvestTask(resourceTarget, targetCount));
-                    if (resourceTarget.GetAvailableResources() <= 0)
-                        _freeResourceTargets.Remove(resourceTarget);
-                }
-                else
-                    humanController.EnqueueTask(new IdleTask());
-            }
+            humanController.EnqueueTask(new BuildTask(_buildTarget));
         }
         else
-            humanController.EnqueueTask(new IdleTask());
+        {
+            if (!_updated)
+            {
+                _freeStorageTargets = FindObjectsOfType<StorageTarget>().Where(target => target.GetFreeSpace() > 0)
+                    .ToList();
+                _freeDroppedTargets = FindObjectsOfType<DroppedTarget>()
+                    .Where(target => target.GetAvailableResources() > 0)
+                    .ToList();
+                _freeResourceTargets = FindObjectsOfType<ResourceTarget>()
+                    .Where(target => target.GetAvailableResources() > 0).ToList();
+                _updated = true;
+            }
+
+            if (_freeStorageTargets.Count > 0)
+            {
+                Vector3 humanPos = humanController.transform.position;
+                StorageTarget storageTarget =
+                    _freeStorageTargets.Aggregate((i1, i2) => i1.Priority < i2.Priority ? i1 : i2);
+                humanController.InventoryResource = storageTarget.Resource;
+                List<DroppedTarget> droppedTargets =
+                    _freeDroppedTargets.Where(target =>
+                            target.Resource == storageTarget.Resource && target.GetAvailableResources() > 0)
+                        .OrderBy(target => target.Priority).ThenBy(target =>
+                            (target.transform.position - humanPos).sqrMagnitude).ToList();
+                int targetCount = Math.Min(humanController.InventoryCapacity, storageTarget.GetFreeSpace());
+
+                bool isTaskChosen = false;
+                if (droppedTargets.Count > 0)
+                {
+                    int droppedTargetsToCollect = targetCount;
+                    for (int i = 0; i < droppedTargets.Count; i++)
+                    {
+                        if (storageTarget.gameObject == droppedTargets[i].gameObject)
+                            continue;
+                        isTaskChosen = true;
+                        int amountToOccupy = Math.Min(targetCount, droppedTargets[i].GetAvailableResources());
+                        humanController.EnqueueTask(new GatherTask(droppedTargets[i], amountToOccupy));
+                        if (droppedTargets[i].GetAvailableResources() <= 0)
+                            _freeDroppedTargets.Remove(droppedTargets[i]);
+                        targetCount -= amountToOccupy;
+                        if (targetCount <= 0)
+                            break;
+                    }
+
+                    if (isTaskChosen)
+                    {
+                        humanController.EnqueueTask(new StoreTask(storageTarget,
+                            droppedTargetsToCollect - targetCount));
+                        if (storageTarget.GetFreeSpace() <= 0)
+                            _freeStorageTargets.Remove(storageTarget);
+                    }
+                }
+
+                if (!isTaskChosen)
+                {
+                    ResourceTarget resourceTarget = _freeResourceTargets
+                        .Where(target => target.Resource == storageTarget.Resource)
+                        .Aggregate((i1, i2) =>
+                        {
+                            return (i1.transform.position - humanPos).sqrMagnitude <
+                                   (i2.transform.position - humanPos).sqrMagnitude
+                                ? i1
+                                : i2;
+                        });
+                    if (resourceTarget)
+                    {
+                        targetCount = Math.Min(targetCount, resourceTarget.GetAvailableResources());
+                        humanController.EnqueueTask(new HarvestTask(resourceTarget, targetCount));
+                        if (resourceTarget.GetAvailableResources() <= 0)
+                            _freeResourceTargets.Remove(resourceTarget);
+                    }
+                    else
+                        humanController.EnqueueTask(new IdleTask());
+                }
+            }
+            else
+                humanController.EnqueueTask(new IdleTask());
+        }
     }
 }

@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _resourceType: 2
-  _storageCapacity: 10
+  _storageCapacity: 3
   _storageIndicators:
   - {fileID: 3731419984772939438}
 --- !u!114 &3731419984772939438
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d2041d3e72ea5458ab1f1bd80249ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _offset: 1
+  _offset: 0
 --- !u!95 &8047617327949935008
 Animator:
   serializedVersion: 3

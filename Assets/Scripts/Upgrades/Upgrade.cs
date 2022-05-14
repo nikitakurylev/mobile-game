@@ -11,6 +11,7 @@ public class Upgrade : StorageIndicator
     [SerializeField] private Transform _progressBar;
     [SerializeField] private Text _upgradeNameText;
     [SerializeField] private float _upgradeTime = 5f;
+    [SerializeField] private BuildTarget _buildTarget;
     private HashSet<Storage> _registeredStorages;
     private int _totalCapacity = 0;
     private bool _isUpdating = false;
@@ -21,6 +22,7 @@ public class Upgrade : StorageIndicator
     {
         _registeredStorages = new HashSet<Storage>();
         _upgradeNameText.text = _upgradeInfo.Name;
+        _buildTarget.enabled = false;
     }
 
     private IEnumerator ProgressBar()
@@ -53,17 +55,24 @@ public class Upgrade : StorageIndicator
         foreach (Storage registeredStorage in _registeredStorages)
             itemCount += registeredStorage.ItemCount;
         if (itemCount >= _totalCapacity)
+        {
             StartCoroutine(ProgressBar());
+            _buildTarget.Active = true;
+        }
+
         _isUpdating = false;
     }
 
     public void FinishBuilding()
     {
+        _buildTarget.enabled = false;
         foreach (StorageTarget storageTarget in GetComponents<StorageTarget>())
             Destroy(storageTarget); 
         foreach (Storage storage in GetComponents<Storage>())
             Destroy(storage);
         FindObjectOfType<UpgradePanelManager>(true).FinishUpgrade(this);
+        _buildTarget.Active = false;
+        Destroy(_buildTarget);
         _onBuildingFinish.Invoke();
     }
 }
