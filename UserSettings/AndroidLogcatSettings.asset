@@ -1,13 +1,98 @@
 {
-    "m_SelectedDeviceId": "",
+    "m_SelectedDeviceId": "b200613d0305",
     "m_SelectedPackage": {
-        "deviceId": "",
-        "name": "",
-        "processId": 0,
+        "deviceId": "b200613d0305",
+        "name": "com.DefaultCompany.mobilegame",
+        "processId": 9560,
         "exited": false
     },
     "m_SelectedPriority": 0,
-    "m_KnownPackagesForSerialization": [],
+    "m_KnownPackagesForSerialization": [
+        {
+            "deviceId": "99171FFAZ005TL",
+            "name": "com.DefaultCompany.mobilegame",
+            "processId": 6259,
+            "exited": false
+        },
+        {
+            "deviceId": "99171FFAZ005TL",
+            "name": "com.DefaultCompany.mobilegame",
+            "processId": 7120,
+            "exited": false
+        },
+        {
+            "deviceId": "99171FFAZ005TL",
+            "name": "com.DefaultCompany.mobilegame",
+            "processId": 7330,
+            "exited": false
+        },
+        {
+            "deviceId": "b200613d0305",
+            "name": "com.android.launcher3",
+            "processId": 29227,
+            "exited": true
+        },
+        {
+            "deviceId": "b200613d0305",
+            "name": "com.DefaultCompany.mobilegame",
+            "processId": 30668,
+            "exited": true
+        },
+        {
+            "deviceId": "b200613d0305",
+            "name": "com.DefaultCompany.mobilegame",
+            "processId": 4788,
+            "exited": true
+        },
+        {
+            "deviceId": "b200613d0305",
+            "name": "com.DefaultCompany.mobilegame",
+            "processId": 7214,
+            "exited": true
+        },
+        {
+            "deviceId": "b200613d0305",
+            "name": "com.DefaultCompany.mobilegame",
+            "processId": 9429,
+            "exited": true
+        },
+        {
+            "deviceId": "b200613d0305",
+            "name": "com.DefaultCompany.mobilegame",
+            "processId": 12424,
+            "exited": false
+        },
+        {
+            "deviceId": "b200613d0305",
+            "name": "com.DefaultCompany.mobilegame",
+            "processId": 12672,
+            "exited": false
+        },
+        {
+            "deviceId": "b200613d0305",
+            "name": "com.DefaultCompany.mobilegame",
+            "processId": 14891,
+            "exited": false
+        },
+        {
+            "deviceId": "b200613d0305",
+            "name": "com.DefaultCompany.mobilegame",
+            "processId": 16063,
+            "exited": false
+        },
+        {
+            "deviceId": "b200613d0305",
+            "name": "com.DefaultCompany.mobilegame",
+            "processId": 27853,
+            "exited": true
+        },
+        {
+            "deviceId": "b200613d0305",
+            "name": "com.DefaultCompany.mobilegame",
+            "processId": 9560,
+            "exited": false
+        }
+    ],
     "m_Tags": {
         "m_Entries": [
             {
@@ -41,13 +126,29 @@
         ]
     },
     "m_MemoryViewerState": {
-        "MemoryWindowHeight": 0.0,
-        "MemoryWindowWidth": 0.0,
-        "MemoryTypeEnabled": [],
+        "MemoryWindowHeight": 411.0,
+        "MemoryWindowWidth": 170.0,
+        "MemoryTypeEnabled": [
+            false,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
         "MemoryGroup": 2,
-        "Behavior": 0
+        "Behavior": 1
     },
     "m_Filter": "",
     "m_FilterIsRegularExpression": false,
-    "m_SymbolPaths": []
+    "m_SymbolPaths": [
+        {
+            "Name": "E:\\Program Files\\Unity\\2020.3.34f1\\Editor\\Data\\PlaybackEngines\\AndroidPlayer\\Variations\\il2cpp\\Development\\Symbols",
+            "Enabled": true
+        }
+    ]
 }

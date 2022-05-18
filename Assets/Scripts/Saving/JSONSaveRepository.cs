@@ -38,7 +38,6 @@ public class JSONSaveRepository : MonoBehaviour, ISaveRepository
 
     private void Flush()
     {
-        Debug.Log(JsonUtility.ToJson(_stats));
         string data = String.Empty;
         foreach (Stat stat in _stats)
         {

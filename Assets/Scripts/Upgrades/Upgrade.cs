@@ -8,8 +8,6 @@ public class Upgrade : StorageIndicator
 {
     [SerializeField] private UnityEvent _onBuildingFinish;
     [SerializeField] private UpgradeInfo _upgradeInfo;
-    [SerializeField] private Transform _progressBar;
-    [SerializeField] private Text _upgradeNameText;
     [SerializeField] private float _upgradeTime = 5f;
     [SerializeField] private BuildTarget _buildTarget;
     private HashSet<Storage> _registeredStorages;
@@ -21,17 +19,18 @@ public class Upgrade : StorageIndicator
     private void Awake()
     {
         _registeredStorages = new HashSet<Storage>();
-        _upgradeNameText.text = _upgradeInfo.Name;
+        BuildPanel.Instance.SetName(_upgradeInfo.Name);
+        BuildPanel.Instance.SetPos(transform.position);
         _buildTarget.enabled = false;
     }
 
     private IEnumerator ProgressBar()
     {
-        _progressBar.parent.gameObject.SetActive(true);
+        BuildPanel.Instance.ShowProgressBar();
         float finishTime = Time.time + _upgradeTime;
         while (Time.time < finishTime)
         {
-            _progressBar.transform.localScale = new Vector3(1 - (finishTime - Time.time) / _upgradeTime, 1, 1);
+            BuildPanel.Instance.SetProgress(1 - (finishTime - Time.time) / _upgradeTime);
             yield return null;
         }
         FinishBuilding();
@@ -50,7 +49,7 @@ public class Upgrade : StorageIndicator
             _totalCapacity += amount;
             _registeredStorages.Add(storage);
         }
-
+        BuildPanel.Instance.UpdateIndicator(storage);
         int itemCount = 0;
         foreach (Storage registeredStorage in _registeredStorages)
             itemCount += registeredStorage.ItemCount;
@@ -73,6 +72,7 @@ public class Upgrade : StorageIndicator
         FindObjectOfType<UpgradePanelManager>(true).FinishUpgrade(this);
         _buildTarget.Active = false;
         Destroy(_buildTarget);
+        BuildPanel.Instance.HideProgressBar();
         _onBuildingFinish.Invoke();
     }
 }
