@@ -6,7 +6,7 @@ public class Storage : MonoBehaviour
     [SerializeField] private ResourceEnum _resourceType = ResourceEnum.None;
     [SerializeField] private int _storageCapacity = 3;
     [SerializeField] private List<StorageIndicator> _storageIndicators;
-    private int _itemCount = 0;
+    [SerializeField] private int _itemCount = 0;
 
     public ResourceEnum ResourceType
     {

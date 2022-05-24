@@ -2,5 +2,6 @@ public enum ResourceEnum
 {
     None,
     Wood,
-    Stone
+    Stone,
+    Food
 }

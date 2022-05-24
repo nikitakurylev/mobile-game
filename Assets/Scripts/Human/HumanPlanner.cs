@@ -100,9 +100,11 @@ public class HumanPlanner : MonoBehaviour
 
                 if (!isTaskChosen)
                 {
-                    ResourceTarget resourceTarget = _freeResourceTargets
-                        .Where(target => target.Resource == storageTarget.Resource)
-                        .Aggregate((i1, i2) =>
+                    ResourceTarget resourceTarget = null;
+                    ResourceTarget[] neededResources = _freeResourceTargets
+                        .Where(target => target.Resource == storageTarget.Resource).ToArray();
+                    if(neededResources.Any())
+                        resourceTarget = neededResources.Aggregate((i1, i2) =>
                         {
                             return (i1.transform.position - humanPos).sqrMagnitude <
                                    (i2.transform.position - humanPos).sqrMagnitude

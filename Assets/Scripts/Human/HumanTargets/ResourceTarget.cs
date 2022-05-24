@@ -7,7 +7,6 @@ public class ResourceTarget : HumanTarget
     [SerializeField] private GameObject _dropPrefab;
     [SerializeField] private Animator _animator;
     [SerializeField] private ParticleSystem _particle;
-    [SerializeField] private float _refillTime = 45f;
     private int _occupied = 0;
     private static readonly int Harvest1 = Animator.StringToHash("harvest");
 
@@ -26,12 +25,6 @@ public class ResourceTarget : HumanTarget
         _storage.ItemCount = _storage.StorageCapacity;
     }
 
-    private void Refill()
-    {
-        _storage.ItemCount = _storage.StorageCapacity;
-        _animator.SetTrigger(Harvest1);
-    }
-
     public void Chop()
     {
         if(_animator != null)
@@ -42,8 +35,7 @@ public class ResourceTarget : HumanTarget
     
     public void Harvest()
     {
-        if (_storage.ItemCount == _storage.StorageCapacity)
-            Invoke(nameof(Refill), _refillTime);
+        
         _storage.ItemCount--;
         _occupied--;
         if (_occupied < 0)

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3731419984772939432}
   - component: {fileID: 3731419984772939438}
   - component: {fileID: 256349821621452426}
+  - component: {fileID: 7338184998533951548}
   - component: {fileID: 4638066228802853713}
   - component: {fileID: 5104656488672601692}
   m_Layer: 0
@@ -119,7 +120,6 @@ MonoBehaviour:
     type: 3}
   _animator: {fileID: 256349821621452426}
   _particle: {fileID: 4638066228802853713}
-  _refillTime: 45
 --- !u!114 &3731419984772939432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,6 +136,8 @@ MonoBehaviour:
   _storageCapacity: 3
   _storageIndicators:
   - {fileID: 3731419984772939438}
+  - {fileID: 7338184998533951548}
+  _itemCount: 3
 --- !u!114 &3731419984772939438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,6 +170,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &7338184998533951548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3731419984772939445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5819dfc2d7c128446a42aa7dc3772c6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _refillTime: 45
+  _animator: {fileID: 256349821621452426}
 --- !u!198 &4638066228802853713
 ParticleSystem:
   m_ObjectHideFlags: 0
