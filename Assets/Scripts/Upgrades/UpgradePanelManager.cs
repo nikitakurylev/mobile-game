@@ -59,7 +59,10 @@ public class UpgradePanelManager : MonoBehaviour
         _panelButtons[_upgrades.IndexOf(upgrade)].transform.parent.gameObject.SetActive(false);
         foreach (UpgradeInfo nextUpgradeInfo in upgrade.UpgradeInfo.NextUpgrades)
         {
-            _panelButtons[_upgrades.FindIndex(nextUpgrade => nextUpgrade.UpgradeInfo == nextUpgradeInfo)].gameObject.SetActive(true); // TODO refactor
+            int index = _upgrades.FindIndex(nextUpgrade => nextUpgrade.UpgradeInfo == nextUpgradeInfo);
+            if (index == -1)
+                throw new UnityException("An Upgrade has not been added to PanelManager");
+            _panelButtons[index].gameObject.SetActive(true); // TODO refactor
         }
         
         _onUpgradeFinish.Invoke();

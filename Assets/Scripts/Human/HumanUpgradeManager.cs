@@ -5,11 +5,13 @@ public class HumanUpgradeManager : MonoBehaviour
 {
     [SerializeField] Stat[] _baseStats;
     private Dictionary<string, int> _stats;
+    private HumanUpgrader[] _humanUpgraders;
     private static HumanUpgradeManager instance = null;
+    private bool _isInitialized;
 
     public static HumanUpgradeManager Instance => instance;
 
-    private void Awake()
+    HumanUpgradeManager()
     {
         if (instance == null)
         {
@@ -19,17 +21,30 @@ public class HumanUpgradeManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
 
+    private void Awake(){
         _stats = new Dictionary<string, int>();
         foreach (Stat stat in _baseStats)
         {
             _stats.Add(stat.StatName, stat.BaseValue);
+        }
+
+        _humanUpgraders = FindObjectsOfType<HumanUpgrader>(true);
+    }
+
+    private static void UpdateHumans(string statName)
+    {
+        foreach (HumanUpgrader humanUpgrader in Instance._humanUpgraders)
+        {
+            humanUpgrader.UpdateHuman(statName);
         }
     }
 
     public void IncrementStat(string statName)
     {
         Instance._stats[statName]++;
+        UpdateHumans(statName);
     }
 
     public static int GetStat(string statName)
