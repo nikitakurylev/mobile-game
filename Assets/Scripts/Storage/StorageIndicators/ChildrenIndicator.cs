@@ -8,6 +8,8 @@ public class ChildrenIndicator : StorageIndicator
 
     public override void UpdateIndicator(Storage storage)
     {
+        if(transform.childCount < storage.ItemCount)
+            return;
         for (int i = Math.Min(_count, storage.ItemCount); i < Math.Max(_count, storage.ItemCount); i++)
         {
             GameObject child = transform.GetChild(i).gameObject;
