@@ -37,10 +37,12 @@ public class BuildPanel : StorageIndicator
         _upgradeName.text = name;
     }
 
-    public void SetPos(Vector3 position)
+    public void SetPos(Vector3 position, Vector3 offset)
     {
-        if (Camera.main != null) 
-            transform.position = Camera.main.WorldToScreenPoint(position);
+        if (Camera.main != null)
+        {
+            transform.position = Camera.main.WorldToScreenPoint(position) + offset;
+        }
     }
 
     public void ShowProgressBar()

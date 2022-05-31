@@ -20,7 +20,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 119
   m_IsActive: 0
 --- !u!4 &583141922656346871
 Transform:
@@ -67,6 +67,7 @@ MonoBehaviour:
   _storageCapacity: 4
   _storageIndicators:
   - {fileID: 583141922656346872}
+  _itemCount: 0
 --- !u!114 &583141922656346875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,6 +98,7 @@ MonoBehaviour:
   _storageCapacity: 3
   _storageIndicators:
   - {fileID: 583141922656346872}
+  _itemCount: 0
 --- !u!114 &583141922656346872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,7 +167,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 119
   m_IsActive: 1
 --- !u!4 &1495371851404456651
 Transform:

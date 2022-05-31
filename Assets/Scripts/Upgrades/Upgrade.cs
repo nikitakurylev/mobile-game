@@ -9,6 +9,7 @@ public class Upgrade : StorageIndicator
     [SerializeField] private UnityEvent _onBuildingFinish;
     [SerializeField] private UpgradeInfo _upgradeInfo;
     [SerializeField] private float _upgradeTime = 5f;
+    [SerializeField] private Vector3 _panelOffset;
     [SerializeField] private BuildTarget _buildTarget;
     private HashSet<Storage> _registeredStorages;
     private int _totalCapacity = 0;
@@ -20,7 +21,7 @@ public class Upgrade : StorageIndicator
     {
         _registeredStorages = new HashSet<Storage>();
         BuildPanel.Instance.SetName(_upgradeInfo.Name);
-        BuildPanel.Instance.SetPos(transform.position);
+        BuildPanel.Instance.SetPos(transform.position, _panelOffset);
         _buildTarget.enabled = false;
     }
 
