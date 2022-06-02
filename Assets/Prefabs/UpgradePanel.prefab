@@ -95,6 +95,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 21300000, guid: 93e7c6c9b694fb14c9e9a65445c591f8, type: 3}
   - {fileID: 21300000, guid: 788810a6cf82f4b49b0a72ecee0b2bce, type: 3}
+  - {fileID: 21300000, guid: da08f25701635984a9ed38632430bf09, type: 3}
   _resourceImages:
   - {fileID: 3151956634195160161}
   - {fileID: 2944995413985428757}
@@ -104,6 +105,7 @@ MonoBehaviour:
   _upgradeName: {fileID: 8513857513769377435}
   _upgradeDescription: {fileID: 6661927808147199485}
   _icon: {fileID: 546543651731613225}
+  _button: {fileID: 2333956385703393333}
 --- !u!114 &4010322620949269803
 MonoBehaviour:
   m_ObjectHideFlags: 0

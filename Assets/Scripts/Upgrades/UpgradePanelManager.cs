@@ -10,7 +10,7 @@ public class UpgradePanelManager : MonoBehaviour
     [SerializeField] private Transform _buttonParent;
     [SerializeField] private UnityEvent _onUpgradeChosen;
     [SerializeField] private UnityEvent _onUpgradeFinish;
-    private List<Button> _panelButtons;
+    private List<UpgradePanel> _panels;
 
     private void OnValidate()
     {
@@ -27,7 +27,7 @@ public class UpgradePanelManager : MonoBehaviour
     {
         foreach (Upgrade upgrade in _upgrades)
         {
-            if (SaveManager.GetData(upgrade.UpgradeInfo.name) == 1)
+            if (SaveManager.GetData(upgrade.UpgradeInfo.ID) == 1)
             {
                 upgrade.gameObject.SetActive(true);
                 upgrade.FinishBuilding();
@@ -37,32 +37,31 @@ public class UpgradePanelManager : MonoBehaviour
 
     private void Init()
     {
-        _panelButtons = new List<Button>();
+        _panels = new List<UpgradePanel>();
         
         foreach (Upgrade upgrade in _upgrades)
         {
-            GameObject panel = Instantiate(_upgradePanelPrefab, _buttonParent);
-            panel.GetComponent<UpgradePanel>().SetUpgrade(upgrade.UpgradeInfo);
-            Button button = panel.GetComponentInChildren<Button>();
-            button.onClick.AddListener(() => upgrade.gameObject.SetActive(true));
-            button.onClick.AddListener(() => _onUpgradeChosen.Invoke());
-            button.gameObject.SetActive(false);
-            _panelButtons.Add(button);
+            UpgradePanel panel = Instantiate(_upgradePanelPrefab, _buttonParent).GetComponent<UpgradePanel>();
+            panel.SetUpgrade(upgrade.UpgradeInfo);
+            panel.AddButtonListener(() => upgrade.gameObject.SetActive(true));
+            panel.AddButtonListener(() => _onUpgradeChosen.Invoke());
+            panel.SetButtonActive(false);
+            _panels.Add(panel);
         }
 
-        _panelButtons[0].gameObject.SetActive(true);
+        _panels[0].SetButtonActive(true);
     }
 
     public void FinishUpgrade(Upgrade upgrade)
     {
-        SaveManager.SetData(upgrade.UpgradeInfo.name, 1);
-        _panelButtons[_upgrades.IndexOf(upgrade)].transform.parent.gameObject.SetActive(false);
+        SaveManager.SetData(upgrade.UpgradeInfo.ID, 1);
+        _panels[_upgrades.IndexOf(upgrade)].gameObject.SetActive(false);
         foreach (UpgradeInfo nextUpgradeInfo in upgrade.UpgradeInfo.NextUpgrades)
         {
             int index = _upgrades.FindIndex(nextUpgrade => nextUpgrade.UpgradeInfo == nextUpgradeInfo);
             if (index == -1)
                 throw new UnityException("An Upgrade has not been added to PanelManager");
-            _panelButtons[index].gameObject.SetActive(true); // TODO refactor
+            _panels[index].SetButtonActive(true); // TODO refactor
         }
         
         _onUpgradeFinish.Invoke();

@@ -1,17 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HumanUpgradeManager : MonoBehaviour
+public class HumanStatManager : MonoBehaviour
 {
     [SerializeField] Stat[] _baseStats;
     private Dictionary<string, int> _stats;
     private HumanUpgrader[] _humanUpgraders;
-    private static HumanUpgradeManager instance = null;
+    private static HumanStatManager instance = null;
     private bool _isInitialized;
 
-    public static HumanUpgradeManager Instance => instance;
+    public static HumanStatManager Instance => instance;
 
-    HumanUpgradeManager()
+    HumanStatManager()
     {
         if (instance == null)
         {

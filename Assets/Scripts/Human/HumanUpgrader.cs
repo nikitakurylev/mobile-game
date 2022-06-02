@@ -8,6 +8,6 @@ public class HumanUpgrader : MonoBehaviour
     [SerializeField] private List<HumanUpgradePlan> _humanUpgradePlans;
     public void UpdateHuman(string statName)
     {
-        _humanUpgradePlans.Find(plan => plan.StatName == statName)?.UpgradeEvents[HumanUpgradeManager.GetStat(statName)].Invoke();
+        _humanUpgradePlans.Find(plan => plan.StatName == statName)?.UpgradeEvents[HumanStatManager.GetStat(statName)].Invoke();
     }
 }

@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7df526272babc084d9127a9cef2edf3d, type: 3}
-  m_Name: Workbench 1
+  m_Name: Axe 1
   m_EditorClassIdentifier: 
-  _upgradeIcon: {fileID: 21300000, guid: 813fa637ba197f643bcc0dab13adc6cb, type: 3}
-  _name: Workbench
-  _description: Unlocks more recipies
+  _upgradeIcon: {fileID: 21300000, guid: 24b821538fca21844b00cc98128371f2, type: 3}
+  _name: Axe
+  _description: Is needed to chop down trees
+  _id: axe1
   _nextUpgrades:
-  - {fileID: 11400000, guid: b5e7608928fd17145b324f20c55f7663, type: 2}
+  - {fileID: 11400000, guid: f5f7723127981ce4cbdd7b0a1319fdc0, type: 2}
   _neededResources:
   - _resourceType: 1
-    _amount: 5
-  - _resourceType: 2
     _amount: 4
+  - _resourceType: 2
+    _amount: 3
