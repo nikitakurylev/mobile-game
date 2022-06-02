@@ -28,7 +28,7 @@ public class Upgrade : StorageIndicator
     private IEnumerator ProgressBar()
     {
         BuildPanel.Instance.ShowProgressBar();
-        float finishTime = Time.time + _upgradeTime;
+        float finishTime = Time.time + _upgradeTime - SaveManager.GetData("craft_speed") * 0.1f;
         while (Time.time < finishTime)
         {
             BuildPanel.Instance.SetProgress(1 - (finishTime - Time.time) / _upgradeTime);

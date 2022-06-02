@@ -48,6 +48,7 @@ public class NavigationMovement : HumanMovement
 
     public override void MoveTo(Transform targetTransform)
     {
+        _agent.speed = 3 + SaveManager.GetData("speed");
         _agent.SetDestination(targetTransform.position);
         _target = targetTransform;
         _target.hasChanged = false;

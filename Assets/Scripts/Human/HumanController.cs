@@ -84,6 +84,8 @@ public class HumanController : MonoBehaviour, IActionListener
 
     public void ExecuteAction(string actionName)
     {
+        string floatName = actionName + "_speed";
+        _animator.SetFloat(floatName,  1f + SaveManager.GetData(floatName) * 0.2f);
         _animator.SetTrigger(actionName);
     }
 

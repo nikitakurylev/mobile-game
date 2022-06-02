@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7df526272babc084d9127a9cef2edf3d, type: 3}
-  m_Name: speed 2
+  m_Name: wood speed 3
   m_EditorClassIdentifier: 
   _upgradeIcon: {fileID: 0}
-  _name: Movement Speed
-  _description: Level 2
-  _id: speed
-  _nextUpgrades: []
+  _name: Wood Harvest Speed
+  _description: Level 3
+  _id: harvest_Wood_speed
+  _nextUpgrades:
+  - {fileID: 11400000, guid: ec6d484b066dedb4ea066b416cc60e0b, type: 2}
   _neededResources:
   - _resourceType: 3
-    _amount: 6
+    _amount: 20
