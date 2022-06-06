@@ -12,6 +12,8 @@ public class BuildPanel : StorageIndicator
     [SerializeField] private Text _upgradeName;
     [SerializeField] private Transform _progressPanel;
     [SerializeField] private Transform _progressBar;
+    private RectTransform _rectTransform;
+
     private void Awake()
     {
         if (instance == null)
@@ -23,6 +25,7 @@ public class BuildPanel : StorageIndicator
             Destroy(gameObject);
         }
 
+        _rectTransform = GetComponent<RectTransform>();
         _hidingPlace = transform.position;
     }
 
@@ -42,6 +45,10 @@ public class BuildPanel : StorageIndicator
         if (Camera.main != null)
         {
             transform.position = Camera.main.WorldToScreenPoint(position) + offset;
+            var rect = _rectTransform.parent.GetComponent<RectTransform>().rect;
+            _rectTransform.anchoredPosition = new Vector2(
+                Mathf.Clamp(_rectTransform.anchoredPosition.x, rect.min.x + _rectTransform.rect.min.x, rect.max.x - _rectTransform.rect.max.x),
+                Mathf.Clamp(_rectTransform.anchoredPosition.y, rect.min.y + _rectTransform.rect.min.y, rect.max.y - _rectTransform.rect.max.y));
         }
     }
 

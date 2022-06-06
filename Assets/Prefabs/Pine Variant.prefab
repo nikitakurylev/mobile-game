@@ -43,11 +43,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pine Variant
       objectReference: {fileID: 0}
-    - target: {fileID: 3731419984772939445, guid: a55af918c7f7e5d4480a3077784b3efd,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
     - target: {fileID: 4638066228802853713, guid: a55af918c7f7e5d4480a3077784b3efd,
         type: 3}
       propertyPath: CollisionModule.m_Planes.Array.data[0]

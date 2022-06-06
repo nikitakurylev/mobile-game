@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter))]
@@ -12,6 +13,7 @@ public class MeshGenerator : MonoBehaviour
     private Dictionary<ResourceEnum, Vector3Int> frames;
 
     public Vector3Int Dimensions => _voxelMap.Dimensions;
+    #if UNITY_EDITOR
 
     private void OnValidate()
     {
@@ -24,9 +26,12 @@ public class MeshGenerator : MonoBehaviour
         if (_meshFilter == null)
             throw new UnityException("No Mesh Filter");
         if (_voxelMap != null && ResourceIndex.Instance != null)
+        {
             GenerateMesh();
+            Unwrapping.GenerateSecondaryUVSet(_meshFilter.sharedMesh);
+        }
     }
-
+    #endif
     private void Awake()
     {
         _meshFilter = GetComponent<MeshFilter>();

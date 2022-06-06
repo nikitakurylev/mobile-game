@@ -48,10 +48,5 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stone 1 Variant
       objectReference: {fileID: 0}
-    - target: {fileID: 3731419984772939445, guid: 517a95a76d68e104fb7a373a55c14884,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 517a95a76d68e104fb7a373a55c14884, type: 3}
