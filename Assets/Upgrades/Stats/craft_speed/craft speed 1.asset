@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7df526272babc084d9127a9cef2edf3d, type: 3}
   m_Name: craft speed 1
   m_EditorClassIdentifier: 
-  _upgradeIcon: {fileID: 0}
+  _upgradeIcon: {fileID: 21300000, guid: 813fa637ba197f643bcc0dab13adc6cb, type: 3}
   _name: Craft Speed
   _description: Level 1
   _id: craft_speed

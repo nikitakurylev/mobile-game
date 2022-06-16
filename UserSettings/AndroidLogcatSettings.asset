@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "b200613d0305",
         "name": "com.DefaultCompany.mobilegame",
-        "processId": 30646,
+        "processId": 4012,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -120,6 +120,30 @@
             "deviceId": "b200613d0305",
             "name": "com.DefaultCompany.mobilegame",
             "processId": 30646,
+            "exited": false
+        },
+        {
+            "deviceId": "b200613d0305",
+            "name": "com.DefaultCompany.mobilegame",
+            "processId": 12782,
+            "exited": true
+        },
+        {
+            "deviceId": "b200613d0305",
+            "name": "com.DefaultCompany.mobilegame",
+            "processId": 14602,
+            "exited": false
+        },
+        {
+            "deviceId": "b200613d0305",
+            "name": "com.DefaultCompany.mobilegame",
+            "processId": 30330,
+            "exited": false
+        },
+        {
+            "deviceId": "b200613d0305",
+            "name": "com.DefaultCompany.mobilegame",
+            "processId": 4012,
             "exited": false
         }
     ],
