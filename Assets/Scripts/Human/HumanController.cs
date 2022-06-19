@@ -59,7 +59,7 @@ public class HumanController : MonoBehaviour, IActionListener
     private void Start()
     {
         _movement.AddListener(this);
-        _humanPlanner.OnHumanFinish(this); 
+        EnqueueTask(new IdleTask());
     }
 
     public void EnqueueTask(HumanTask humanTask)

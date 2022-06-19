@@ -6,8 +6,11 @@ public abstract class HumanTask
 
     public void ExecuteTask(HumanController humanController)
     {
-        if(_taskFinished)
+        if (_taskFinished)
+        {
+            humanController.FinishTask();
             return;
+        }
         this.HumanController = humanController;
         StartTask();
     }
@@ -17,7 +20,8 @@ public abstract class HumanTask
     protected void FinishTask()
     {
         _taskFinished = true;
-        HumanController.FinishTask();
+        if(HumanController != null)
+            HumanController.FinishTask();
     }
     
     public abstract void OnActionFinish();
