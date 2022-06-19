@@ -32,4 +32,13 @@ public class GatherTask : HumanTask
             FinishTask();
         }
     }
+
+    public override void CancelTask()
+    {
+        if (_isMoving)
+        {
+            _droppedTarget.Vacant(_amount);
+            FinishTask();
+        }
+    }
 }

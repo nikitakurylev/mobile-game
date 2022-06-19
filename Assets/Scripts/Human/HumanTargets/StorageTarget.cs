@@ -22,6 +22,13 @@ public class StorageTarget : HumanTarget
         _occupied += count;
     }
 
+    public void Vacant(int count)
+    {
+        if (count > _occupied)
+            throw new UnityException("Trying to vacant more than occupied");
+        _occupied -= count;
+    }
+
     public void Store(int count)
     {
         _occupied -= count;

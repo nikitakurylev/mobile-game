@@ -9,4 +9,8 @@ public class IdleTask : HumanTask
     {
         FinishTask();
     }
+
+    public override void CancelTask()
+    {
+    }
 }

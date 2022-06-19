@@ -27,8 +27,18 @@ public class StoreTask : HumanTask
         else
         {
             HumanController.InventoryCount -= _resourceCount;
-            HumanController.InventoryResource = ResourceEnum.None;
+            if(HumanController.InventoryCount <= 0)
+                HumanController.InventoryResource = ResourceEnum.None;
             _storageTarget.Store(_resourceCount);
+            FinishTask();
+        }
+    }
+
+    public override void CancelTask()
+    {
+        if (_isMoving)
+        {
+            _storageTarget.Vacant(_resourceCount);
             FinishTask();
         }
     }

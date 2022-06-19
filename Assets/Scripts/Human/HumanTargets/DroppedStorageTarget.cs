@@ -28,6 +28,13 @@ public class DroppedStorageTarget : DroppedTarget
         _occupied += amount;
     }
 
+    public override void Vacant(int amount)
+    {
+        if (amount > _occupied)
+            throw new UnityException("Trying to vacant more than occupied");
+        _occupied -= amount;
+    }
+
     public override void PickUp(int amount)
     {
         if (amount > _occupied)

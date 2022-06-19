@@ -19,5 +19,6 @@ public abstract class HumanMovement : MonoBehaviour
         _listeners.Add(listener);
     }
     public abstract void MoveTo(Transform targetTransform);
+    public abstract void Stop();
     public abstract float GetSpeed();
 }
