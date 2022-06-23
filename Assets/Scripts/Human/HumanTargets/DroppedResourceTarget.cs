@@ -15,6 +15,13 @@ public class DroppedResourceTarget : DroppedTarget
         _isFree = false;
     }
 
+    public override void Vacant(int amount)
+    {
+        if (_isFree)
+            throw new UnityException("Dropped already vacant");
+        _isFree = true;
+    }
+
     public override void PickUp(int amount)
     {
         if (_isFree)

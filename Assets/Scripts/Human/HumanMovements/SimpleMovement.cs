@@ -30,6 +30,11 @@ public class SimpleMovement : HumanMovement
         _isMoving = true;
     }
 
+    public override void Stop()
+    {
+        _isMoving = false;
+    }
+
     public override float GetSpeed()
     {
         return _speed;

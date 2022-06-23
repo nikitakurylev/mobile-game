@@ -22,4 +22,8 @@ public class BuildTask : HumanTask
         HumanController.ExecuteAction("build");
         HumanController.FinishTask();
     }
+
+    public override void CancelTask()
+    {
+    }
 }

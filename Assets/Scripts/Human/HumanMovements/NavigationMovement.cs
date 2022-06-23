@@ -53,6 +53,13 @@ public class NavigationMovement : HumanMovement
         _target = targetTransform;
         _target.hasChanged = false;
         _isMoving = true;
+        _agent.isStopped = false;
+    }
+
+    public override void Stop()
+    {
+        _agent.isStopped = true;
+        _isMoving = false;
     }
 
     public override float GetSpeed()

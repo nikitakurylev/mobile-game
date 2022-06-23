@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class HarvestTask : HumanTask
 {
     private ResourceTarget _resourceTarget;
@@ -7,6 +9,8 @@ public class HarvestTask : HumanTask
 
     public HarvestTask(ResourceTarget resourceTarget, int resourceCount)
     {
+        if (resourceCount <= 0)
+            throw new UnityException("Invalid Resource Count!");
         _resourceTarget = resourceTarget;
         _resourceTarget.Occupy(resourceCount);
         _resourceToHarvest = resourceCount;
@@ -15,7 +19,7 @@ public class HarvestTask : HumanTask
     protected override void StartTask()
     {
         _isMoving = true;
-        HumanController.InventoryResource = _resourceTarget.Resource;
+        //HumanController.InventoryResource = _resourceTarget.Resource;
         HumanController.MoveTo(_resourceTarget);
     }
 
@@ -41,6 +45,20 @@ public class HarvestTask : HumanTask
                 HumanController.ExecuteAction("harvest_" + _resourceTarget.Resource);
             else
                 HumanController.FinishTask();
+        }
+    }
+
+    public override void CancelTask()
+    {
+        if (_isMoving)
+        {
+            _resourceTarget.Vacant(_resourceToHarvest);
+            FinishTask();
+        }
+        else
+        {
+            _resourceTarget.Vacant(_resourceToHarvest - 1);
+            _resourceToHarvest = 1;
         }
     }
 }

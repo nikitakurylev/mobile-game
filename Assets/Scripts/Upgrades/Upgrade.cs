@@ -23,6 +23,7 @@ public class Upgrade : StorageIndicator
         BuildPanel.Instance.SetName(_upgradeInfo.Name);
         BuildPanel.Instance.SetPos(transform.position, _panelOffset);
         _buildTarget.enabled = false;
+        HumanPlanner.CancelAll();
     }
 
     private IEnumerator ProgressBar()

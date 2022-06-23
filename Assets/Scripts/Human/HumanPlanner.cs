@@ -10,6 +10,10 @@ public class HumanPlanner : MonoBehaviour
     private List<DroppedTarget> _freeDroppedTargets;
     private List<ResourceTarget> _freeResourceTargets;
     private BuildTarget _buildTarget;
+    private static HumanPlanner _instance;
+    private HashSet<HumanController> _humanControllers;
+
+    public static HumanPlanner Instance => _instance;
 
     private void OnValidate()
     {
@@ -18,6 +22,19 @@ public class HumanPlanner : MonoBehaviour
             Destroy(this);
             throw new UnityException("Only one Human Planner per scene");
         }
+    }
+
+    HumanPlanner()
+    {
+        if (_instance == null)
+            _instance = this;
+        else
+            Destroy(this);
+    }
+
+    private void Awake()
+    {
+        _humanControllers = new HashSet<HumanController>();
     }
 
     private void Start()
@@ -35,6 +52,10 @@ public class HumanPlanner : MonoBehaviour
 
     public void OnHumanFinish(HumanController humanController)
     {
+        if (!_humanControllers.Contains(humanController))
+        {
+            _humanControllers.Add(humanController);
+        }
         if(_buildTarget == null)
             _buildTarget = FindObjectOfType<BuildTarget>();
         if (_buildTarget != null && !_buildTarget.Active)
@@ -43,6 +64,20 @@ public class HumanPlanner : MonoBehaviour
         if (_buildTarget != null)
         {
             humanController.EnqueueTask(new BuildTask(_buildTarget));
+        }
+        else if(humanController.InventoryResource != ResourceEnum.None)
+        {
+            List<StorageTarget> freeStorageTargetsOfType = FindObjectsOfType<StorageTarget>()
+                .Where(target => target.Resource == humanController.InventoryResource && target.GetFreeSpace() > 0).ToList();
+            if (freeStorageTargetsOfType.Any())
+            {
+                StorageTarget target = freeStorageTargetsOfType.Aggregate((i1, i2) => i1.Priority < i2.Priority ? i1 : i2);
+                humanController.EnqueueTask(new StoreTask(target, Math.Min(humanController.InventoryCount, target.GetFreeSpace())));
+            }
+            else
+            {
+                humanController.EnqueueTask(new IdleTask());
+            }
         }
         else
         {
@@ -63,13 +98,13 @@ public class HumanPlanner : MonoBehaviour
                 Vector3 humanPos = humanController.transform.position;
                 StorageTarget storageTarget =
                     _freeStorageTargets.Aggregate((i1, i2) => i1.Priority < i2.Priority ? i1 : i2);
-                humanController.InventoryResource = storageTarget.Resource;
+                //humanController.InventoryResource = storageTarget.Resource;
                 List<DroppedTarget> droppedTargets =
                     _freeDroppedTargets.Where(target =>
                             target.Resource == storageTarget.Resource && target.GetAvailableResources() > 0)
                         .OrderBy(target => target.Priority).ThenBy(target =>
                             (target.transform.position - humanPos).sqrMagnitude).ToList();
-                int targetCount = Math.Min(humanController.InventoryCapacity, storageTarget.GetFreeSpace());
+                int targetCount = Math.Min(humanController.InventoryCapacity(storageTarget.Resource), storageTarget.GetFreeSpace());
 
                 bool isTaskChosen = false;
                 if (droppedTargets.Count > 0)
@@ -125,5 +160,11 @@ public class HumanPlanner : MonoBehaviour
             else
                 humanController.EnqueueTask(new IdleTask());
         }
+    }
+
+    public static void CancelAll()
+    {
+        foreach (HumanController humanController in _instance._humanControllers)
+            humanController.CancelAll();
     }
 }

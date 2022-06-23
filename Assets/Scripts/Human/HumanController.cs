@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(HumanMovement), typeof(Storage))]
@@ -23,10 +24,9 @@ public class HumanController : MonoBehaviour, IActionListener
         set => _storage.ItemCount = value;
     }
     
-    public int InventoryCapacity
+    public int InventoryCapacity(ResourceEnum resourceType)
     {
-        get => _storage.StorageCapacity;
-        //set => _storage.StorageCapacity = value;
+        return _storages[resourceType].StorageCapacity;
     }
     
     
@@ -42,7 +42,7 @@ public class HumanController : MonoBehaviour, IActionListener
     private void Awake()
     {
         _movement = GetComponent<HumanMovement>();
-        _humanPlanner = FindObjectOfType<HumanPlanner>();
+        _humanPlanner = HumanPlanner.Instance;
         if (_humanPlanner == null)
             throw new UnityException("No Human Planner in scene");
         if (_animator == null)
@@ -59,7 +59,7 @@ public class HumanController : MonoBehaviour, IActionListener
     private void Start()
     {
         _movement.AddListener(this);
-        _humanPlanner.OnHumanFinish(this); 
+        EnqueueTask(new IdleTask());
     }
 
     public void EnqueueTask(HumanTask humanTask)
@@ -71,6 +71,7 @@ public class HumanController : MonoBehaviour, IActionListener
 
     public void FinishTask()
     {
+        _movement.Stop();
         _taskQueue.Dequeue();
         if(_taskQueue.Count == 0)
             _humanPlanner.OnHumanFinish(this); 
@@ -97,5 +98,13 @@ public class HumanController : MonoBehaviour, IActionListener
     public void OnActionFinished()
     {
         _taskQueue.Peek().OnActionFinish();
+    }
+
+    public void CancelAll()
+    {
+        foreach (HumanTask humanTask in _taskQueue.ToList())
+        {
+            humanTask.CancelTask();
+        }
     }
 }
