@@ -138,14 +138,19 @@ public class HumanPlanner : MonoBehaviour
                     ResourceTarget resourceTarget = null;
                     ResourceTarget[] neededResources = _freeResourceTargets
                         .Where(target => target.Resource == storageTarget.Resource).ToArray();
-                    if(neededResources.Any())
-                        resourceTarget = neededResources.Aggregate((i1, i2) =>
-                        {
-                            return (i1.transform.position - humanPos).sqrMagnitude <
-                                   (i2.transform.position - humanPos).sqrMagnitude
-                                ? i1
-                                : i2;
-                        });
+                    if (neededResources.Any())
+                    {
+                        resourceTarget = neededResources.FirstOrDefault(target => target.Priority == 0);
+                        if(!resourceTarget)
+                            resourceTarget = neededResources.Aggregate((i1, i2) =>
+                            {
+                                return (i1.transform.position - humanPos).sqrMagnitude <
+                                       (i2.transform.position - humanPos).sqrMagnitude
+                                    ? i1
+                                    : i2;
+                            });
+                    }
+
                     if (resourceTarget)
                     {
                         targetCount = Math.Min(targetCount, resourceTarget.GetAvailableResources());

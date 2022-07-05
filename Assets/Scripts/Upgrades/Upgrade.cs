@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Upgrade : StorageIndicator
 {
     [SerializeField] private UnityEvent _onBuildingFinish;
+    [SerializeField] private UnityEvent _onAwake;
     [SerializeField] private UpgradeInfo _upgradeInfo;
     [SerializeField] private float _upgradeTime = 5f;
     [SerializeField] private Vector3 _panelOffset;
@@ -24,6 +25,7 @@ public class Upgrade : StorageIndicator
         BuildPanel.Instance.SetPos(transform.position, _panelOffset);
         _buildTarget.enabled = false;
         HumanPlanner.CancelAll();
+        _onAwake.Invoke();
     }
 
     private IEnumerator ProgressBar()

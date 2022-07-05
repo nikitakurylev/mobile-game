@@ -9,8 +9,11 @@ public class ResourceTarget : HumanTarget
     [SerializeField] private ParticleSystem _particle;
     private int _occupied = 0;
     private static readonly int Harvest1 = Animator.StringToHash("harvest");
-
+    private bool _chopDownForever = false;
+    
     public ResourceEnum Resource => _storage.ResourceType;
+
+    public int Priority => _chopDownForever ? 0 : 1;
 
     private void Awake()
     {
@@ -41,8 +44,10 @@ public class ResourceTarget : HumanTarget
         if (_occupied < 0)
             throw new UnityException("Harvested more than occupied");
         Instantiate(_dropPrefab,
-            transform.position + new Vector3(Random.Range(-1f, 1f), 0.5f, Random.Range(-1f, 1f)).normalized * 3,
+            transform.position + new Vector3(Random.Range(-1f, 1f), 0.5f, Random.Range(-1f, 1f)).normalized,
             Quaternion.AngleAxis(Random.Range(0f, 360f), Vector3.up));
+        if(_chopDownForever && _storage.ItemCount == 0)
+            gameObject.SetActive(false);
     }
 
     public void Occupy(int count)
@@ -62,5 +67,10 @@ public class ResourceTarget : HumanTarget
     public int GetAvailableResources()
     {
         return _storage.ItemCount - _occupied;
+    }
+
+    public void ChopDownForever()
+    {
+        _chopDownForever = true;
     }
 }

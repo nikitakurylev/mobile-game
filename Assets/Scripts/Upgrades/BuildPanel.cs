@@ -12,6 +12,10 @@ public class BuildPanel : StorageIndicator
     [SerializeField] private Text _upgradeName;
     [SerializeField] private Transform _progressPanel;
     [SerializeField] private Transform _progressBar;
+    [SerializeField] private Button _debugSkip;
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+    private HashSet<Storage> _storages;
+#endif
     private RectTransform _rectTransform;
 
     private void Awake()
@@ -27,10 +31,30 @@ public class BuildPanel : StorageIndicator
 
         _rectTransform = GetComponent<RectTransform>();
         _hidingPlace = transform.position;
+        
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+        _storages = new HashSet<Storage>();
+        _debugSkip.gameObject.SetActive(true);
+        _debugSkip.onClick.AddListener(Skip);
+#endif
     }
+
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+    private void Skip()
+    {
+        foreach (Storage storage in _storages)
+        {
+            storage.ItemCount = storage.StorageCapacity;
+        }
+        HumanPlanner.CancelAll();
+    }
+#endif
 
     public override void UpdateIndicator(Storage storage)
     {
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+        _storages.Add(storage);
+#endif
         _barIndicators[(int) storage.ResourceType].UpdateIndicator(storage);
         _textIndicators[(int) storage.ResourceType].UpdateIndicator(storage);
     }
