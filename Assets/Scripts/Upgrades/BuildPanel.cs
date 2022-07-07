@@ -46,6 +46,12 @@ public class BuildPanel : StorageIndicator
         {
             storage.ItemCount = storage.StorageCapacity;
         }
+
+        foreach (HumanController humanController in FindObjectsOfType<HumanController>())
+        {
+            humanController.InventoryCount = 0;
+            humanController.InventoryResource = ResourceEnum.None;
+        }
         HumanPlanner.CancelAll();
     }
 #endif

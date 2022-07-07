@@ -56,7 +56,8 @@ public class HumanPlanner : MonoBehaviour
         {
             _humanControllers.Add(humanController);
         }
-        if(_buildTarget == null)
+
+        if (_buildTarget == null)
             _buildTarget = FindObjectOfType<BuildTarget>();
         if (_buildTarget != null && !_buildTarget.Active)
             _buildTarget = null;
@@ -65,14 +66,17 @@ public class HumanPlanner : MonoBehaviour
         {
             humanController.EnqueueTask(new BuildTask(_buildTarget));
         }
-        else if(humanController.InventoryResource != ResourceEnum.None)
+        else if (humanController.InventoryResource != ResourceEnum.None)
         {
             List<StorageTarget> freeStorageTargetsOfType = FindObjectsOfType<StorageTarget>()
-                .Where(target => target.Resource == humanController.InventoryResource && target.GetFreeSpace() > 0).ToList();
+                .Where(target => target.Resource == humanController.InventoryResource && target.GetFreeSpace() > 0)
+                .ToList();
             if (freeStorageTargetsOfType.Any())
             {
-                StorageTarget target = freeStorageTargetsOfType.Aggregate((i1, i2) => i1.Priority < i2.Priority ? i1 : i2);
-                humanController.EnqueueTask(new StoreTask(target, Math.Min(humanController.InventoryCount, target.GetFreeSpace())));
+                StorageTarget target =
+                    freeStorageTargetsOfType.Aggregate((i1, i2) => i1.Priority < i2.Priority ? i1 : i2);
+                humanController.EnqueueTask(new StoreTask(target,
+                    Math.Min(humanController.InventoryCount, target.GetFreeSpace())));
             }
             else
             {
@@ -93,7 +97,12 @@ public class HumanPlanner : MonoBehaviour
                 _updated = true;
             }
 
-            if (_freeStorageTargets.Count > 0)
+            ResourceTarget chopDownForever = _freeResourceTargets.Find(target => target.Priority == 0);
+            if (chopDownForever)
+            {
+                humanController.EnqueueTask(new HarvestTask(chopDownForever, 1));
+            }
+            else if (_freeStorageTargets.Count > 0)
             {
                 Vector3 humanPos = humanController.transform.position;
                 StorageTarget storageTarget =
@@ -104,7 +113,8 @@ public class HumanPlanner : MonoBehaviour
                             target.Resource == storageTarget.Resource && target.GetAvailableResources() > 0)
                         .OrderBy(target => target.Priority).ThenBy(target =>
                             (target.transform.position - humanPos).sqrMagnitude).ToList();
-                int targetCount = Math.Min(humanController.InventoryCapacity(storageTarget.Resource), storageTarget.GetFreeSpace());
+                int targetCount = Math.Min(humanController.InventoryCapacity(storageTarget.Resource),
+                    storageTarget.GetFreeSpace());
 
                 bool isTaskChosen = false;
                 if (droppedTargets.Count > 0)
@@ -139,17 +149,13 @@ public class HumanPlanner : MonoBehaviour
                     ResourceTarget[] neededResources = _freeResourceTargets
                         .Where(target => target.Resource == storageTarget.Resource).ToArray();
                     if (neededResources.Any())
-                    {
-                        resourceTarget = neededResources.FirstOrDefault(target => target.Priority == 0);
-                        if(!resourceTarget)
-                            resourceTarget = neededResources.Aggregate((i1, i2) =>
-                            {
-                                return (i1.transform.position - humanPos).sqrMagnitude <
-                                       (i2.transform.position - humanPos).sqrMagnitude
-                                    ? i1
-                                    : i2;
-                            });
-                    }
+                        resourceTarget = neededResources.Aggregate((i1, i2) =>
+                        {
+                            return (i1.transform.position - humanPos).sqrMagnitude <
+                                   (i2.transform.position - humanPos).sqrMagnitude
+                                ? i1
+                                : i2;
+                        });
 
                     if (resourceTarget)
                     {
