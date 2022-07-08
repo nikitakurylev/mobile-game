@@ -120,6 +120,9 @@ MonoBehaviour:
     type: 3}
   _animator: {fileID: 8047617327949935008}
   _particle: {fileID: 4670989147718766082}
+  _onChoppedDownForever:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &3731419984772939432
 MonoBehaviour:
   m_ObjectHideFlags: 0

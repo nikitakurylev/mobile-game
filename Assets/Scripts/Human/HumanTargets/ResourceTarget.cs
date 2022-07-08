@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class ResourceTarget : HumanTarget
@@ -7,6 +8,7 @@ public class ResourceTarget : HumanTarget
     [SerializeField] private GameObject _dropPrefab;
     [SerializeField] private Animator _animator;
     [SerializeField] private ParticleSystem _particle;
+    [SerializeField] private UnityEvent _onChoppedDownForever;
     private int _occupied = 0;
     private static readonly int Harvest1 = Animator.StringToHash("harvest");
     private bool _chopDownForever = false;
@@ -46,8 +48,11 @@ public class ResourceTarget : HumanTarget
         Instantiate(_dropPrefab,
             transform.position + new Vector3(Random.Range(-1f, 1f), 0.5f, Random.Range(-1f, 1f)).normalized,
             Quaternion.AngleAxis(Random.Range(0f, 360f), Vector3.up));
-        if(_chopDownForever && _storage.ItemCount == 0)
+        if (_chopDownForever && _storage.ItemCount == 0)
+        {
+            _onChoppedDownForever.Invoke();
             gameObject.SetActive(false);
+        }
     }
 
     public void Occupy(int count)

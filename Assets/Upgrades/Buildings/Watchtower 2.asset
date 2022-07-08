@@ -18,6 +18,7 @@ MonoBehaviour:
   _id: watchtower2
   _nextUpgrades:
   - {fileID: 11400000, guid: cc1d5960e0045d540a3a8041cf2c8725, type: 2}
+  - {fileID: 11400000, guid: 34ed7889d19d8364c9469c6c31d4a3e5, type: 2}
   _neededResources:
   - _resourceType: 1
     _amount: 12

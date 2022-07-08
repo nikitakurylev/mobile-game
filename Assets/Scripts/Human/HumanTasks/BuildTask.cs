@@ -9,7 +9,13 @@ public class BuildTask : HumanTask
     
     protected override void StartTask()
     {
+        _buildTarget.OnBuildFinish.AddListener(OnBuildEnd);
         HumanController.MoveTo(_buildTarget);
+    }
+
+    private void OnBuildEnd()
+    {
+        FinishTask();
     }
 
     public override void OnActionFinish()
@@ -20,7 +26,6 @@ public class BuildTask : HumanTask
         if(_buildTarget != null)
             HumanController.transform.LookAt(_buildTarget.transform);
         HumanController.ExecuteAction("build");
-        HumanController.FinishTask();
     }
 
     public override void CancelTask()
