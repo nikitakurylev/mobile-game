@@ -15,13 +15,15 @@ public class BuildTask : HumanTask
 
     private void OnBuildEnd()
     {
-        FinishTask();
+        HumanController.ExecuteAction("idle");
     }
 
     public override void OnActionFinish()
     {
-        if(_finished)
+        if(_finished) {
+            FinishTask();
             return;
+        }
         _finished = true;
         if(_buildTarget != null)
             HumanController.transform.LookAt(_buildTarget.transform);

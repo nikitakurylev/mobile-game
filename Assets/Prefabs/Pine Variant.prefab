@@ -7,6 +7,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2540345367150600977, guid: a55af918c7f7e5d4480a3077784b3efd,
+        type: 3}
+      propertyPath: _voxelMap
+      value: 
+      objectReference: {fileID: -7553767694498373463, guid: 93d69b4dd7090a541baf875b28b73f3a,
+        type: 3}
+    - target: {fileID: 3388401257341566355, guid: a55af918c7f7e5d4480a3077784b3efd,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3731419984772939434, guid: a55af918c7f7e5d4480a3077784b3efd,
         type: 3}
       propertyPath: m_RootOrder
@@ -32,12 +43,6 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 3731419984772939444, guid: a55af918c7f7e5d4480a3077784b3efd,
-        type: 3}
-      propertyPath: _voxelMap
-      value: 
-      objectReference: {fileID: -7553767694498373463, guid: 6bb2de8cd4055b94cbc803a15240ad78,
-        type: 3}
     - target: {fileID: 3731419984772939445, guid: a55af918c7f7e5d4480a3077784b3efd,
         type: 3}
       propertyPath: m_Name
