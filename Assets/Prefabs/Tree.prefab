@@ -116,9 +116,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9b376404e310d44c8baff8d6689378b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _positionOffset: {x: 0.5, y: 0, z: 0.5}
   _storage: {fileID: 3731419984772939432}
   _dropPrefab: {fileID: 6660931077717362193, guid: 6d79ea053da01494587d31c7f258cf71,
     type: 3}
+  _dropDistance: 1.2
   _animator: {fileID: 256349821621452426}
   _particle: {fileID: 4638066228802853713}
   _onChoppedDownForever:

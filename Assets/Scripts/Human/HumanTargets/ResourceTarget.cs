@@ -6,6 +6,7 @@ public class ResourceTarget : HumanTarget
 {
     [SerializeField] private Storage _storage;
     [SerializeField] private GameObject _dropPrefab;
+    [SerializeField] private float _dropDistance = 1f;
     [SerializeField] private Animator _animator;
     [SerializeField] private ParticleSystem _particle;
     [SerializeField] private UnityEvent _onChoppedDownForever;
@@ -46,8 +47,8 @@ public class ResourceTarget : HumanTarget
         if (_occupied < 0)
             throw new UnityException("Harvested more than occupied");
         Instantiate(_dropPrefab,
-            transform.position + new Vector3(Random.Range(-1f, 1f), 0.5f, Random.Range(-1f, 1f)).normalized,
-            Quaternion.AngleAxis(Random.Range(0f, 360f), Vector3.up));
+            transform.position + new Vector3(Random.Range(-1f, 1f), 0.5f, Random.Range(-1f, 0)).normalized * _dropDistance,
+            new Quaternion());
         if (_chopDownForever && _storage.ItemCount == 0)
         {
             _onChoppedDownForever.Invoke();

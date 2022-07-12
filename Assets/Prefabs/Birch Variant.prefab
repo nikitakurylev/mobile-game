@@ -88,6 +88,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3731419984772939439, guid: a55af918c7f7e5d4480a3077784b3efd,
+        type: 3}
+      propertyPath: _positionOffset.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3731419984772939444, guid: a55af918c7f7e5d4480a3077784b3efd,
         type: 3}
       propertyPath: _voxelMap
