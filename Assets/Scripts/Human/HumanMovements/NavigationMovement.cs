@@ -37,7 +37,7 @@ public class NavigationMovement : HumanMovement
                 {
                     if (!_agent.hasPath || _agent.velocity.sqrMagnitude == 0f)
                     {
-                        transform.LookAt(_target);
+                        transform.rotation = _target.rotation;
                         InvokeListeners();
                         _isMoving = false;
                     }

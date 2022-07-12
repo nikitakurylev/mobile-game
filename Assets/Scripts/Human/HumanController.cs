@@ -80,7 +80,7 @@ public class HumanController : MonoBehaviour, IActionListener
 
     public void MoveTo(HumanTarget humanTarget)
     {
-        _movement.MoveTo(humanTarget.transform);
+        _movement.MoveTo(humanTarget.TargetTransform(this));
     }
 
     public void ExecuteAction(string actionName)

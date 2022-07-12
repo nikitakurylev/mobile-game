@@ -6,6 +6,7 @@ public class HarvestTask : HumanTask
     private int _resourceToHarvest;
     private bool _isMoving = false;
     private int _chopsLeft = 0;
+    private bool _finished = false;
 
     public HarvestTask(ResourceTarget resourceTarget, int resourceCount)
     {
@@ -33,8 +34,12 @@ public class HarvestTask : HumanTask
         }
         else
         {
-            _chopsLeft--;
-            _resourceTarget.Chop();
+            if (!_finished)
+            {
+                _chopsLeft--;
+                _resourceTarget.Chop();
+            }
+
             if (_chopsLeft <= 0)
             {
                 _resourceToHarvest--;
@@ -43,8 +48,15 @@ public class HarvestTask : HumanTask
             }
             if (_resourceToHarvest > 0)
                 HumanController.ExecuteAction("harvest_" + _resourceTarget.Resource);
-            else
+            else if(_finished)
+            {
                 HumanController.FinishTask();
+            }
+            else
+            {
+                HumanController.ExecuteAction("idle");
+                _finished = true;
+            }
         }
     }
 
