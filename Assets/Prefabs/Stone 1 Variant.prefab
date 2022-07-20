@@ -41,7 +41,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _voxelMap
       value: 
-      objectReference: {fileID: -7553767694498373463, guid: 76504b105bf5c6b4bbe013a5132c11a3,
+      objectReference: {fileID: -7553767694498373463, guid: 21f38fa82bb0ab1489a6556f4aeb8714,
         type: 3}
     - target: {fileID: 3731419984772939445, guid: 517a95a76d68e104fb7a373a55c14884,
         type: 3}
