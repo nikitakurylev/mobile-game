@@ -19,6 +19,8 @@ MonoBehaviour:
   _nextUpgrades:
   - {fileID: 11400000, guid: cc1d5960e0045d540a3a8041cf2c8725, type: 2}
   - {fileID: 11400000, guid: 34ed7889d19d8364c9469c6c31d4a3e5, type: 2}
+  - {fileID: 11400000, guid: f5d03c36edcbf924fbffd89ad7e7a8e3, type: 2}
+  - {fileID: 11400000, guid: 85ad3353bef2ac847a4f4c7e5f0eb4c4, type: 2}
   _neededResources:
   - _resourceType: 1
     _amount: 12

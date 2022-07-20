@@ -18,7 +18,7 @@ public class UpgradePanel : MonoBehaviour
 
     public void SetUpgrade(UpgradeInfo upgradeInfo)
     {
-        _upgradeName.text = upgradeInfo.Name;
+        _upgradeName.text = upgradeInfo.DisplayName;
         _upgradeDescription.text = upgradeInfo.Description;
         for (int i = 0; i < upgradeInfo.NeededResources.Count; i++)
         {

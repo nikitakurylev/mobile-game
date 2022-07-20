@@ -60,7 +60,7 @@ public class UpgradePanelManager : MonoBehaviour
         {
             int index = _upgrades.FindIndex(nextUpgrade => nextUpgrade.UpgradeInfo == nextUpgradeInfo);
             if (index == -1)
-                throw new UnityException("An Upgrade has not been added to PanelManager");
+                throw new UnityException("Upgrade \"" + nextUpgradeInfo.DisplayName + "\" has not been added to PanelManager");
             _panels[index].SetButtonActive(true); // TODO refactor
         }
         

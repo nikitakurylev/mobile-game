@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7df526272babc084d9127a9cef2edf3d, type: 3}
-  m_Name: Stone Storage
+  m_Name: Wood Storage 2
   m_EditorClassIdentifier: 
   _upgradeIcon: {fileID: 21300000, guid: 3e2935b48fdb522419144dcf0ab91ecb, type: 3}
-  _name: Stone Storage
-  _description: Can be used to store stone
-  _id: stone1
+  _name: Wood Storage 2
+  _description: Can be used to store wood
+  _id: wood2
   _nextUpgrades:
-  - {fileID: 11400000, guid: b2da1ac272057c0489f924a13b7f77c7, type: 2}
+  - {fileID: 11400000, guid: 42ad77fa25de6cb489a11c5fab1761c7, type: 2}
   _neededResources:
   - _resourceType: 1
-    _amount: 36
+    _amount: 12
   - _resourceType: 2
-    _amount: 48
+    _amount: 10

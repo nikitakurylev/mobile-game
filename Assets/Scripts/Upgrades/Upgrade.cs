@@ -21,7 +21,7 @@ public class Upgrade : StorageIndicator
     private void Awake()
     {
         _registeredStorages = new HashSet<Storage>();
-        BuildPanel.Instance.SetName(_upgradeInfo.Name);
+        BuildPanel.Instance.SetName(_upgradeInfo.DisplayName);
         BuildPanel.Instance.SetPos(transform.position, _panelOffset);
         _buildTarget.enabled = false;
         HumanPlanner.CancelAll();

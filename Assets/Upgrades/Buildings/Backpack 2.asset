@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7df526272babc084d9127a9cef2edf3d, type: 3}
-  m_Name: Stone Storage
+  m_Name: Backpack 2
   m_EditorClassIdentifier: 
-  _upgradeIcon: {fileID: 21300000, guid: 3e2935b48fdb522419144dcf0ab91ecb, type: 3}
-  _name: Stone Storage
-  _description: Can be used to store stone
-  _id: stone1
+  _upgradeIcon: {fileID: 21300000, guid: 6222e3028d62ad04da0f2b93d7a47ca9, type: 3}
+  _name: Backpack
+  _description: Increases carrying capacity
+  _id: backpack2
   _nextUpgrades:
-  - {fileID: 11400000, guid: b2da1ac272057c0489f924a13b7f77c7, type: 2}
+  - {fileID: 11400000, guid: 9a18ce82fa37860449706a2a77b1ed3b, type: 2}
   _neededResources:
   - _resourceType: 1
-    _amount: 36
+    _amount: 45
   - _resourceType: 2
-    _amount: 48
+    _amount: 63

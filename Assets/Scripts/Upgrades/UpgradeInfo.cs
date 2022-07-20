@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "Upgrade", menuName = "Upgrades/Upgrade", order = 1)]
 public class UpgradeInfo : ScriptableObject
@@ -13,7 +14,7 @@ public class UpgradeInfo : ScriptableObject
 
     public Sprite UpgradeIcon => _upgradeIcon;
 
-    public string Name => _name;
+    public string DisplayName => _name;
 
     public string ID => _id;
 
