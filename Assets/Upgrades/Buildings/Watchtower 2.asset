@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Watchtower 2
   m_EditorClassIdentifier: 
   _upgradeIcon: {fileID: 21300000, guid: baecd55b7f3da0d4b9357116dd7f9f45, type: 3}
-  _name: Watchtower level 2
+  _name: Watchtower lvl 2
   _description: Build it to increase play area
   _id: watchtower2
   _nextUpgrades:

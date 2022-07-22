@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Stone Storage 2
   m_EditorClassIdentifier: 
   _upgradeIcon: {fileID: 21300000, guid: 3e2935b48fdb522419144dcf0ab91ecb, type: 3}
-  _name: Stone Storage
+  _name: Stone Storage lvl 2
   _description: Can be used to store stone
   _id: stone2
   _nextUpgrades: []

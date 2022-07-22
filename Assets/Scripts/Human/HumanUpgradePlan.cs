@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class HumanUpgradePlan
 {
     [SerializeField] private string _statName;
-    [SerializeField] private List<UnityEvent> _upgradeEvents;
+    [NonReorderable][SerializeField] private List<UnityEvent> _upgradeEvents;
 
     public string StatName => _statName;
 

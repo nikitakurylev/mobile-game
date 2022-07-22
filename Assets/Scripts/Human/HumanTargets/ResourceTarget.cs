@@ -47,7 +47,7 @@ public class ResourceTarget : HumanTarget
         if (_occupied < 0)
             throw new UnityException("Harvested more than occupied");
         Instantiate(_dropPrefab,
-            transform.position + new Vector3(Random.Range(-1f, 1f), 0.5f, Random.Range(-1f, 0)).normalized * _dropDistance,
+            transform.position + new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 0)).normalized * _dropDistance + new Vector3(0, 0.5f),
             new Quaternion());
         if (_chopDownForever && _storage.ItemCount == 0)
         {

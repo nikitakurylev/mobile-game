@@ -79,6 +79,7 @@ GameObject:
   - component: {fileID: 7338184998533951548}
   - component: {fileID: 4638066228802853713}
   - component: {fileID: 5104656488672601692}
+  - component: {fileID: 5720584186977512038}
   m_Layer: 0
   m_Name: Tree
   m_TagString: Untagged
@@ -5034,6 +5035,20 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!64 &5720584186977512038
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3731419984772939445}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &6502358411803785904
 GameObject:
   m_ObjectHideFlags: 0

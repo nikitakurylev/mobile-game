@@ -12,12 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7df526272babc084d9127a9cef2edf3d, type: 3}
   m_Name: Backpack 2
   m_EditorClassIdentifier: 
-  _upgradeIcon: {fileID: 21300000, guid: 6222e3028d62ad04da0f2b93d7a47ca9, type: 3}
-  _name: Backpack
+  _upgradeIcon: {fileID: 21300000, guid: 813fa637ba197f643bcc0dab13adc6cb, type: 3}
+  _name: Backpack lvl 2
   _description: Increases carrying capacity
   _id: backpack2
-  _nextUpgrades:
-  - {fileID: 11400000, guid: 9a18ce82fa37860449706a2a77b1ed3b, type: 2}
+  _nextUpgrades: []
   _neededResources:
   - _resourceType: 1
     _amount: 45

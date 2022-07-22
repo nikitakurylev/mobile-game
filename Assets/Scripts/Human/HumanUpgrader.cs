@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class HumanUpgrader : MonoBehaviour
 {
-    [SerializeField] private List<HumanUpgradePlan> _humanUpgradePlans;
+    [NonReorderable][SerializeField] private List<HumanUpgradePlan> _humanUpgradePlans;
     public void UpdateHuman(string statName)
     {
         _humanUpgradePlans.Find(plan => plan.StatName == statName)?.UpgradeEvents[HumanStatManager.GetStat(statName)].Invoke();
