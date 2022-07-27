@@ -15,6 +15,7 @@ public class BuildTask : HumanTask
 
     private void OnBuildEnd()
     {
+        _finished = true;
         HumanController.ExecuteAction("idle");
     }
 
@@ -32,5 +33,6 @@ public class BuildTask : HumanTask
 
     public override void CancelTask()
     {
+        OnBuildEnd();
     }
 }
