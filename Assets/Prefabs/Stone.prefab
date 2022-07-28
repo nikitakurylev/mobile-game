@@ -160,7 +160,7 @@ MonoBehaviour:
   _storage: {fileID: 3731419984772939432}
   _dropPrefab: {fileID: 6660931077717362193, guid: d051c3a1f4dbbf54987a417b2eaab03e,
     type: 3}
-  _dropDistance: 2
+  _dropDistance: 3
   _animator: {fileID: 8047617327949935008}
   _particle: {fileID: 4670989147718766082}
   _onChoppedDownForever:

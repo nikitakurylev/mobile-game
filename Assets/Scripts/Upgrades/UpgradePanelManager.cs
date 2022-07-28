@@ -49,6 +49,17 @@ public class UpgradePanelManager : MonoBehaviour
             _panels.Add(panel);
         }
 
+        foreach (UpgradePanel upgradePanel in _panels)
+        {
+            foreach (UpgradeInfo nextUpgradeInfo in upgradePanel.UpgradeInfo.NextUpgrades)
+            {
+                int index = _upgrades.FindIndex(nextUpgrade => nextUpgrade.UpgradeInfo == nextUpgradeInfo);
+                if (index == -1)
+                    throw new UnityException("Upgrade \"" + nextUpgradeInfo.DisplayName + "\" has not been added to PanelManager");
+                _panels[index].AddPreviousUpgrade(upgradePanel.UpgradeInfo);
+            }
+        }
+
         _panels[0].SetButtonActive(true);
     }
 
@@ -61,7 +72,7 @@ public class UpgradePanelManager : MonoBehaviour
             int index = _upgrades.FindIndex(nextUpgrade => nextUpgrade.UpgradeInfo == nextUpgradeInfo);
             if (index == -1)
                 throw new UnityException("Upgrade \"" + nextUpgradeInfo.DisplayName + "\" has not been added to PanelManager");
-            _panels[index].SetButtonActive(true); // TODO refactor
+            _panels[index].FinishPreviousUpgrade(upgrade.UpgradeInfo);
         }
         
         _onUpgradeFinish.Invoke();

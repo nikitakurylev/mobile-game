@@ -102,9 +102,11 @@ public class HumanController : MonoBehaviour, IActionListener
 
     public void CancelAll()
     {
-        foreach (HumanTask humanTask in _taskQueue.ToList())
+        _taskQueue.Enqueue(_taskQueue.Dequeue());
+        while (_taskQueue.Count > 1)
         {
-            humanTask.CancelTask();
+            _taskQueue.Dequeue();
         }
+        _taskQueue.Peek().CancelTask();
     }
 }

@@ -48,11 +48,11 @@ public class HarvestTask : HumanTask
             }
             if (_resourceToHarvest > 0)
                 HumanController.ExecuteAction("harvest_" + _resourceTarget.Resource);
-            else if(_finished)
+            if(_finished)
             {
                 HumanController.FinishTask();
             }
-            else
+            else if(_resourceToHarvest <= 0)
             {
                 HumanController.ExecuteAction("idle");
                 _finished = true;

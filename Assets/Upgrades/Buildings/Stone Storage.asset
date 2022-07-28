@@ -18,6 +18,7 @@ MonoBehaviour:
   _id: stone1
   _nextUpgrades:
   - {fileID: 11400000, guid: b2da1ac272057c0489f924a13b7f77c7, type: 2}
+  - {fileID: 11400000, guid: e7e1a9af04fa9b84bafce142f6f73eba, type: 2}
   _neededResources:
   - _resourceType: 1
     _amount: 36
