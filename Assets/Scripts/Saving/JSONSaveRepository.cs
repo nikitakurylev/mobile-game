@@ -38,6 +38,7 @@ public class JSONSaveRepository : MonoBehaviour, ISaveRepository
 
     private void Flush()
     {
+        Init();
         string data = String.Empty;
         foreach (Stat stat in _stats)
         {

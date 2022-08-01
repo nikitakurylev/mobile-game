@@ -1,21 +1,30 @@
 using UnityEngine;
 
-public class LerpMover : MonoBehaviour, IMover
+public class LerpMover : MonoBehaviour
 {
     [SerializeField] private Vector2 _secondPosition;
     private Vector2 _firstPosition;
-    private bool _moved = false;
+    [SerializeField] private bool _moved = false;
     private RectTransform _rectTransform;
     
     private void Awake()
     {
         _rectTransform = GetComponent<RectTransform>();
-        _firstPosition = _rectTransform.anchoredPosition;
+        if (_moved)
+        {
+            _firstPosition = _secondPosition;
+            _secondPosition = _rectTransform.anchoredPosition;
+        }
+        else
+            _firstPosition = _rectTransform.anchoredPosition;
     }
 
-    public void Move()
+    public void Move(bool moved)
     {
-        _moved = !_moved;
-        _rectTransform.anchoredPosition = _moved ? _secondPosition : _firstPosition;
+        if (_moved != moved)
+        {
+            _moved = !_moved;
+            _rectTransform.anchoredPosition = _moved ? _secondPosition : _firstPosition;
+        }
     }
 }

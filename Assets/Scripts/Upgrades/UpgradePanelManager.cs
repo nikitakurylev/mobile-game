@@ -25,12 +25,20 @@ public class UpgradePanelManager : MonoBehaviour
 
     private void Start()
     {
-        foreach (Upgrade upgrade in _upgrades)
+        for (var index = 0; index < _upgrades.Count; index++)
         {
-            if (SaveManager.GetData(upgrade.UpgradeInfo.ID) == 1)
+            Upgrade upgrade = _upgrades[index];
+            int state = SaveManager.GetData(upgrade.UpgradeInfo.ID);
+            if (state > 0)
             {
                 upgrade.gameObject.SetActive(true);
-                upgrade.FinishBuilding();
+                if (state == 1)
+                    upgrade.FinishBuilding();
+                else
+                {
+                    _onUpgradeChosen.Invoke();
+                    _panels[index].gameObject.SetActive(false);
+                }
             }
         }
     }

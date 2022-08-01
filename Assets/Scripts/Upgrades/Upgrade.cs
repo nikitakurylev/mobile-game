@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -24,7 +25,9 @@ public class Upgrade : StorageIndicator
         BuildPanel.Instance.SetName(_upgradeInfo.DisplayName);
         BuildPanel.Instance.SetPos(transform.position, _panelOffset);
         _buildTarget.enabled = false;
+        _totalCapacity = _upgradeInfo.NeededResources.Sum(resource => resource.Amount);
         HumanPlanner.CancelAll();
+        SaveManager.SetData(_upgradeInfo.ID, 2);
         _onAwake.Invoke();
     }
 
@@ -50,7 +53,6 @@ public class Upgrade : StorageIndicator
             int amount = _upgradeInfo.NeededResources.Find(resource => resource.ResourceType == storage.ResourceType)
                 .Amount;
             storage.StorageCapacity = amount;
-            _totalCapacity += amount;
             _registeredStorages.Add(storage);
         }
         BuildPanel.Instance.UpdateIndicator(storage);
@@ -70,9 +72,13 @@ public class Upgrade : StorageIndicator
     {
         _buildTarget.enabled = false;
         foreach (StorageTarget storageTarget in GetComponents<StorageTarget>())
-            Destroy(storageTarget); 
+            Destroy(storageTarget);
         foreach (Storage storage in GetComponents<Storage>())
+        {
+            storage.ItemCount = 0;
             Destroy(storage);
+        }
+
         FindObjectOfType<UpgradePanelManager>(true).FinishUpgrade(this);
         _buildTarget.Active = false;
         Destroy(_buildTarget);
