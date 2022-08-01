@@ -72,7 +72,9 @@ public class Upgrade : StorageIndicator
     {
         _buildTarget.enabled = false;
         foreach (StorageTarget storageTarget in GetComponents<StorageTarget>())
-            Destroy(storageTarget);
+            DestroyImmediate(storageTarget);
+        foreach (SaveIndicator saveIndicator in GetComponents<SaveIndicator>())
+            DestroyImmediate(saveIndicator);
         foreach (Storage storage in GetComponents<Storage>())
         {
             storage.ItemCount = 0;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,6 +38,7 @@ public class SaveManager : MonoBehaviour
     {
         Instance._saveRepository.Save(key, value);
         Instance._saveCache[key] = value;
+        Instance._saveRepository.Save("lastSave", unchecked((int)DateTime.Now.Ticks));
     }
 
     public static int GetData(string key)

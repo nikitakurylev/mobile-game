@@ -41,6 +41,8 @@ public class UpgradePanelManager : MonoBehaviour
                 }
             }
         }
+
+        StartCoroutine(FindObjectOfType<IdleStorageFiller>().Fill());
     }
 
     private void Init()
