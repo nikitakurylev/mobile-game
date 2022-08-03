@@ -10,6 +10,7 @@ public class IdleStorageFiller : MonoBehaviour
     [SerializeField] float minutesToFillOne = 2f;
     [SerializeField] private Text woodText, stoneText, foodText;
     [SerializeField] private GameObject filledPanel;
+    [SerializeField] private Text _timeText;
 
     public IEnumerator Fill()
     {
@@ -34,12 +35,19 @@ public class IdleStorageFiller : MonoBehaviour
         if (filledResources.Any(pair => pair.Value > 0))
         {
             filledPanel.SetActive(true);
+            _timeText.text = "You've been away for " + minutesSpent + " minutes";
             if (filledResources.ContainsKey(ResourceEnum.Wood))
                 woodText.text = filledResources[ResourceEnum.Wood].ToString();
+            else
+                woodText.text = "0";
             if (filledResources.ContainsKey(ResourceEnum.Stone))
                 stoneText.text = filledResources[ResourceEnum.Stone].ToString();
+            else
+                stoneText.text = "0";
             if (filledResources.ContainsKey(ResourceEnum.Food))
                 foodText.text = filledResources[ResourceEnum.Food].ToString();
+            else
+                foodText.text = "0";
         }
     }
     
