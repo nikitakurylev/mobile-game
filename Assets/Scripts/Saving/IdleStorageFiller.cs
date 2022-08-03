@@ -7,14 +7,14 @@ using UnityEngine.UI;
 
 public class IdleStorageFiller : MonoBehaviour
 {
-    [SerializeField] float hoursToFullyFill = 12f;
+    [SerializeField] float minutesToFillOne = 2f;
     [SerializeField] private Text woodText, stoneText, foodText;
     [SerializeField] private GameObject filledPanel;
 
     public IEnumerator Fill()
     {
         Dictionary<ResourceEnum, int> filledResources = new Dictionary<ResourceEnum, int>();
-        float hoursSpent = (unchecked((int) DateTime.Now.Ticks) - SaveManager.GetData("lastSave")) * 1f / TimeSpan.TicksPerHour;
+        int minutesSpent = SaveManager.GetCurrentMinutes() - SaveManager.GetData("lastSave");
         foreach (var saveIndicator in FindObjectsOfType<SaveIndicator>())
         {
             while(saveIndicator.SavedStorages == null)
@@ -23,7 +23,7 @@ public class IdleStorageFiller : MonoBehaviour
             foreach (Storage savedStorage in saveIndicator.SavedStorages)
             {
                 int before = savedStorage.ItemCount;
-                savedStorage.ItemCount = Math.Min(savedStorage.StorageCapacity, savedStorage.ItemCount + Mathf.RoundToInt(savedStorage.StorageCapacity * hoursSpent / hoursToFullyFill));
+                savedStorage.ItemCount = Math.Min(savedStorage.StorageCapacity, savedStorage.ItemCount + Mathf.RoundToInt(minutesSpent / minutesToFillOne));
                 if (filledResources.ContainsKey(savedStorage.ResourceType))
                     filledResources[savedStorage.ResourceType] += savedStorage.ItemCount - before;
                 else
@@ -31,7 +31,7 @@ public class IdleStorageFiller : MonoBehaviour
             }
         }
 
-        if (filledResources.Any())
+        if (filledResources.Any(pair => pair.Value > 0))
         {
             filledPanel.SetActive(true);
             if (filledResources.ContainsKey(ResourceEnum.Wood))
@@ -41,5 +41,11 @@ public class IdleStorageFiller : MonoBehaviour
             if (filledResources.ContainsKey(ResourceEnum.Food))
                 foodText.text = filledResources[ResourceEnum.Food].ToString();
         }
+    }
+    
+    void OnApplicationPause(bool pauseStatus)
+    {
+        if(!pauseStatus)
+            StartCoroutine(Fill());
     }
 }

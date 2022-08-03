@@ -38,7 +38,7 @@ public class SaveManager : MonoBehaviour
     {
         Instance._saveRepository.Save(key, value);
         Instance._saveCache[key] = value;
-        Instance._saveRepository.Save("lastSave", unchecked((int)DateTime.Now.Ticks));
+        Instance._saveRepository.Save("lastSave", GetCurrentMinutes());
     }
 
     public static int GetData(string key)
@@ -46,5 +46,11 @@ public class SaveManager : MonoBehaviour
         if(Instance._saveCache.ContainsKey(key))
             return Instance._saveCache[key];
         return 0;
+    }
+
+    public static int GetCurrentMinutes()
+    {
+        return (((DateTime.Now.Year - 2000) * 365 + DateTime.Now.Day) * 24 + DateTime.Now.Hour) * 60 +
+               DateTime.Now.Minute;
     }
 }
