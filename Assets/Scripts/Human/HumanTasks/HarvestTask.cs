@@ -30,7 +30,7 @@ public class HarvestTask : HumanTask
         {
             _isMoving = false;
             HumanController.ExecuteAction("harvest_" + _resourceTarget.Resource);
-            _chopsLeft = 6 - HumanStatManager.GetStat("axe");
+            _chopsLeft = 6 - HumanStatManager.GetStat("harvest_" + _resourceTarget.Resource + "_speed");
         }
         else
         {
@@ -44,7 +44,7 @@ public class HarvestTask : HumanTask
             {
                 _resourceToHarvest--;
                 _resourceTarget.Harvest();
-                _chopsLeft = 6 - HumanStatManager.GetStat("axe");
+                _chopsLeft = 7 - HumanStatManager.GetStat("harvest_" + _resourceTarget.Resource + "_speed");
             }
             if (_resourceToHarvest > 0)
                 HumanController.ExecuteAction("harvest_" + _resourceTarget.Resource);

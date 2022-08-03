@@ -21,13 +21,13 @@ public class UpgradePanel : MonoBehaviour
 
     private void UpdateRequirements()
     {
-        _requirements.text = "Build ";
+        _requirements.text = "To unlock, build these:\n";
         for (int i = 0; i < _previousUpgrades.Count - 1; i++)
         {
             _requirements.text += "\"" + _previousUpgrades[i].DisplayName + "\", ";
         }
 
-        _requirements.text += "\"" + _previousUpgrades.Last().DisplayName + "\" to unlock";
+        _requirements.text += "\"" + _previousUpgrades.Last().DisplayName + "\"";
     }
     
     public void SetUpgrade(UpgradeInfo upgradeInfo)

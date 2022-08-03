@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7df526272babc084d9127a9cef2edf3d, type: 3}
-  m_Name: Workbench 2
+  m_Name: Backpack 3
   m_EditorClassIdentifier: 
   _upgradeIcon: {fileID: 21300000, guid: 813fa637ba197f643bcc0dab13adc6cb, type: 3}
-  _name: Workbench lvl 2
-  _description: Unlocks more recipies
-  _id: workbench2
+  _name: Backpack lvl 3
+  _description: Increases carrying capacity
+  _id: backpack3
   _nextUpgrades:
-  - {fileID: 11400000, guid: 74538f1d12327c343ad718a480682927, type: 2}
+  - {fileID: 11400000, guid: b9195e24724a3c441a885751f8f89872, type: 2}
+  - {fileID: 11400000, guid: 495edd51db291fd4e9f6c4810f723bb5, type: 2}
   _neededResources:
   - _resourceType: 1
-    _amount: 12
+    _amount: 122
   - _resourceType: 2
-    _amount: 9
+    _amount: 171

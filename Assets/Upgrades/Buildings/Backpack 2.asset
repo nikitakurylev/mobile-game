@@ -18,6 +18,7 @@ MonoBehaviour:
   _id: backpack2
   _nextUpgrades:
   - {fileID: 11400000, guid: 2f28eadfc64e50e4fb38c2f7555d6480, type: 2}
+  - {fileID: 11400000, guid: 34d17453dea47344d91a1818ca516248, type: 2}
   _neededResources:
   - _resourceType: 1
     _amount: 45

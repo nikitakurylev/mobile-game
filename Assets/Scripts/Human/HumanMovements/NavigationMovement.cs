@@ -27,7 +27,9 @@ public class NavigationMovement : HumanMovement
             if (_target.hasChanged)
             {
                 _target.hasChanged = false;
-                _agent.SetDestination(_target.position);
+                NavMeshPath navMeshPath = new NavMeshPath();
+                _agent.CalculatePath(_target.position, navMeshPath);
+                _agent.SetPath(navMeshPath);
             }
             
             // Check if we've reached the destination

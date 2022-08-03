@@ -70,6 +70,8 @@ public class Upgrade : StorageIndicator
 
     public void FinishBuilding()
     {
+        if(!_buildTarget)
+            return;
         _buildTarget.enabled = false;
         foreach (StorageTarget storageTarget in GetComponents<StorageTarget>())
             DestroyImmediate(storageTarget);
