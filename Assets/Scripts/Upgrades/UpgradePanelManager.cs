@@ -31,7 +31,6 @@ public class UpgradePanelManager : MonoBehaviour
             int state = SaveManager.GetData(upgrade.UpgradeInfo.ID);
             if (state > 0)
             {
-                upgrade.gameObject.SetActive(true);
                 if (state == 1)
                     upgrade.FinishBuilding();
                 else
@@ -39,6 +38,7 @@ public class UpgradePanelManager : MonoBehaviour
                     _onUpgradeChosen.Invoke();
                     _panels[index].gameObject.SetActive(false);
                 }
+                upgrade.gameObject.SetActive(true);
             }
         }
 

@@ -16,11 +16,15 @@ public class Upgrade : StorageIndicator
     private HashSet<Storage> _registeredStorages;
     private int _totalCapacity = 0;
     private bool _isUpdating = false;
+    private bool _isFinished = false;
 
     public UpgradeInfo UpgradeInfo => _upgradeInfo;
 
     private void Awake()
     {
+        if (_isFinished)
+            return;
+
         _registeredStorages = new HashSet<Storage>();
         BuildPanel.Instance.SetName(_upgradeInfo.DisplayName);
         BuildPanel.Instance.SetPos(transform.position, _panelOffset);
@@ -40,6 +44,7 @@ public class Upgrade : StorageIndicator
             BuildPanel.Instance.SetProgress(1 - (finishTime - Time.time) / _upgradeTime);
             yield return null;
         }
+        BuildPanel.Instance.HideProgressBar();
         FinishBuilding();
     }
     
@@ -72,6 +77,7 @@ public class Upgrade : StorageIndicator
     {
         if(!_buildTarget)
             return;
+        _isFinished = true;
         _buildTarget.enabled = false;
         foreach (StorageTarget storageTarget in GetComponents<StorageTarget>())
             DestroyImmediate(storageTarget);
@@ -86,7 +92,6 @@ public class Upgrade : StorageIndicator
         FindObjectOfType<UpgradePanelManager>(true).FinishUpgrade(this);
         _buildTarget.Active = false;
         Destroy(_buildTarget);
-        BuildPanel.Instance.HideProgressBar();
         _onBuildingFinish.Invoke();
     }
 }

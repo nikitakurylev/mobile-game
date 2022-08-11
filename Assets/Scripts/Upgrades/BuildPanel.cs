@@ -11,6 +11,7 @@ public class BuildPanel : StorageIndicator
     private Vector3 _worldPos;
     private Vector3 _offset;
     private Camera _mainCamera;
+    private bool _isHidden = true;
     [SerializeField] private List<BarIndicator> _barIndicators;
     [SerializeField] private List<TextIndicator> _textIndicators;
     [SerializeField] private Text _upgradeName;
@@ -75,7 +76,7 @@ public class BuildPanel : StorageIndicator
 
     private void Update()
     {
-        if (_mainCamera.transform.hasChanged)
+        if (!_isHidden && _mainCamera.transform.hasChanged)
         {
             UpdatePos();
             _mainCamera.transform.hasChanged = false;
@@ -100,6 +101,7 @@ public class BuildPanel : StorageIndicator
     {
         _offset = offset;
         _worldPos = position;
+        _isHidden = false;
         UpdatePos();
     }
 
@@ -111,6 +113,7 @@ public class BuildPanel : StorageIndicator
 
     public void HideProgressBar()
     {
+        _isHidden = true;
         transform.position = _hidingPlace;
         _progressPanel.position = _hidingPlace;
     }

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class TextIndicator : StorageIndicator
 {
     private Text _text;
+    private RectTransform _parentRect;
     
     private void OnValidate()
     {
@@ -15,10 +16,12 @@ public class TextIndicator : StorageIndicator
     private void Awake()
     {
         _text = GetComponent<Text>();
+        _parentRect = transform.parent.GetComponent<RectTransform>();
     }
     
     public override void UpdateIndicator(Storage storage)
     {
         _text.text = storage.ItemCount + "/" + storage.StorageCapacity;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(_parentRect);
     }
 }
