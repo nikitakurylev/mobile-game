@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: fed2fdb57684da54285b286a9579b725
+guid: cda554ddd71f2c8438920489706a955b
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,10 +9,10 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Peace Sans
+  - Pixeldown
   fallbackFontReferences: []
   customCharacters: 
-  fontRenderingMode: 0
+  fontRenderingMode: 3
   ascentCalculationMode: 1
   useLegacyBoundsCalculation: 0
   shouldRoundAdvanceValue: 1

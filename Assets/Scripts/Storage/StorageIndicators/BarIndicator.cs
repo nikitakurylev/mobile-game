@@ -1,9 +1,18 @@
+using System;
 using UnityEngine;
+using UnityEngine.UI;
 
+[RequireComponent(typeof(Image))]
 public class BarIndicator : StorageIndicator
 {
+    private Image _image;
+    private void Awake()
+    {
+        _image = GetComponent<Image>();
+    }
+
     public override void UpdateIndicator(Storage storage)
     {
-        transform.localScale = new Vector3(1f * storage.ItemCount / storage.StorageCapacity, transform.localScale.y, transform.localScale.z);
+        _image.fillAmount = storage.ItemCount * 1f / storage.StorageCapacity;
     }
 }
