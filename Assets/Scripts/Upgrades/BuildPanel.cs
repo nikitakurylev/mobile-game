@@ -116,6 +116,9 @@ public class BuildPanel : StorageIndicator
         _isHidden = true;
         transform.position = _hidingPlace;
         _progressPanel.position = _hidingPlace;
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+        _storages.Clear();
+#endif
     }
 
     public void SetProgress(float progress)

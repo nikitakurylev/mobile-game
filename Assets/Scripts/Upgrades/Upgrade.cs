@@ -44,8 +44,8 @@ public class Upgrade : StorageIndicator
             BuildPanel.Instance.SetProgress(1 - (finishTime - Time.time) / _upgradeTime);
             yield return null;
         }
-        BuildPanel.Instance.HideProgressBar();
         FinishBuilding();
+        BuildPanel.Instance.HideProgressBar();
     }
     
     public override void UpdateIndicator(Storage storage)
