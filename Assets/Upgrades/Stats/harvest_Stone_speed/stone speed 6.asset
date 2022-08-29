@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7df526272babc084d9127a9cef2edf3d, type: 3}
   m_Name: stone speed 6
   m_EditorClassIdentifier: 
-  _upgradeIcon: {fileID: 21300000, guid: 6222e3028d62ad04da0f2b93d7a47ca9, type: 3}
+  _upgradeIcon: {fileID: 21300000, guid: 85e2a7cb79b546c4e87d3db2bfb054fb, type: 3}
   _name: Stone Harvest Speed
   _description: Level 6
   _id: harvest_Stone_speed

@@ -39,6 +39,7 @@ public class HumanPlanner : MonoBehaviour
 
     private void Start()
     {
+        Application.targetFrameRate = 60;
         foreach (var human in FindObjectsOfType<HumanController>())
         {
             human.EnqueueTask(new IdleTask());
