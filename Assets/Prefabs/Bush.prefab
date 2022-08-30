@@ -482,7 +482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5819dfc2d7c128446a42aa7dc3772c6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _refillTime: 45
+  _refillTime: 120
   _animator: {fileID: 8507594740632236644}
 --- !u!95 &8507594740632236644
 Animator:
