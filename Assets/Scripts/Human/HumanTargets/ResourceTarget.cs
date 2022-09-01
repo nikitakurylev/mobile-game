@@ -39,21 +39,25 @@ public class ResourceTarget : HumanTarget
             _particle.Play();
     }
     
-    public void Harvest()
+    public void Harvest(Vector3 pos)
     {
-        
         _storage.ItemCount--;
         _occupied--;
         if (_occupied < 0)
             throw new UnityException("Harvested more than occupied");
         Instantiate(_dropPrefab,
-            transform.position + new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 0)).normalized * _dropDistance + new Vector3(0, 0.5f),
+            pos + new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 0)).normalized * _dropDistance + new Vector3(0, 0.5f),
             new Quaternion());
         if (_chopDownForever && _storage.ItemCount == 0)
         {
             _onChoppedDownForever.Invoke();
             gameObject.SetActive(false);
         }
+    }
+
+    public void Harvest()
+    {
+        Harvest(transform.position);
     }
 
     public void Occupy(int count)

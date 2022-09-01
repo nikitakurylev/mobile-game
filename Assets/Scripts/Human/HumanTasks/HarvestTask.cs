@@ -43,7 +43,7 @@ public class HarvestTask : HumanTask
             if (_chopsLeft <= 0)
             {
                 _resourceToHarvest--;
-                _resourceTarget.Harvest();
+                _resourceTarget.Harvest(HumanController.transform.position);
                 _chopsLeft = 7 - HumanStatManager.GetStat("harvest_" + _resourceTarget.Resource + "_speed");
             }
             if (_resourceToHarvest > 0)

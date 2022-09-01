@@ -35,6 +35,8 @@ public class Fish : MonoBehaviour
 
     private void RandomMove()
     {
+        if (!isActiveAndEnabled)
+            return;
         StopAllCoroutines();
         Vector3 position = new Vector3(Random.Range(-_maxMoveDistance, _maxMoveDistance), 0,
             Random.Range(-_maxMoveDistance, _maxMoveDistance));

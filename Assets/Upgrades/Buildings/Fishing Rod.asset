@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7df526272babc084d9127a9cef2edf3d, type: 3}
   m_Name: Fishing Rod
   m_EditorClassIdentifier: 
-  _upgradeIcon: {fileID: 21300000, guid: 3e2935b48fdb522419144dcf0ab91ecb, type: 3}
+  _upgradeIcon: {fileID: 21300000, guid: 1906e5bd44dea5845bfe4b1fa1946cab, type: 3}
   _name: Fishing Rod
   _description: Catch fish to get more food
   _id: fishingrod1
