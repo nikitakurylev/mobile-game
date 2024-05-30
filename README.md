@@ -5,4 +5,4 @@ Originally, it was supposed to be published by [10k Riders Publishing](https://1
  
 [Gameplay video](https://youtu.be/Pzq86gTBOMc)
 
-<img align="left" src="Screenshot1.png" alt="Screenshot 1" width="480"/> <img align="right" src="Screenshot2.png" alt="Screenshot 2" width="480"/>
+<img src="Screenshot1.png" alt="Screenshot 1" width="320"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="Screenshot2.png" alt="Screenshot 2" width="320"/>
